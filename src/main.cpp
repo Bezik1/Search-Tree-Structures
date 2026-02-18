@@ -1,7 +1,14 @@
 #include <iostream>
+#include "core/BinarySearchTree/BinarySearchTree.hpp"
+#include "utils/comparators/DoubleComparator/DoubleComparator.hpp"
 
-using namespace std;
+int main()
+{
+    DoubleComparator doubleComparator;
+    BinarySearchTree<double> bst(&doubleComparator);
 
-int main() {
+    bst.add(1.0f);
+
+    std::cout << bst.getSize() << std::endl;
     return 0;
 }
