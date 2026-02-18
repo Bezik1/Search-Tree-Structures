@@ -4,6 +4,6 @@ template <typename T>
 class IIterator
 {
 public:
-    virtual bool hasNext();
-    virtual T next();
+    virtual bool hasNext() const = 0;
+    virtual T next() = 0;
 };

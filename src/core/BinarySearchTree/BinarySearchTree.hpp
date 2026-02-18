@@ -32,19 +32,11 @@ public:
               parent(parent) {}
     };
 
-    Node *getMinimum(const Node &currentNode) const;
-    Node *getNode(const T &el) const;
-    Node *getNodeSuccessor(const T &el) const;
-
-    IComparator<T> *comparator;
-    Node *root = NULL;
-    int size = 0;
-
     ~BinarySearchTree();
 
     BinarySearchTree(IComparator<T> *comp = NULL);
 
-    IIterator<T> *iterator() override;
+    IIterator<T> *iterator() const override;
     void add(T value) override;
     void clear() override;
     void remove(T el) override;
@@ -53,16 +45,26 @@ public:
     int getSize() const override;
 
 private:
-    class InOrderWalkInnerIterator : IIterator<T>
+    class InnerIterator : public IIterator<T>
     {
     private:
-        Stack<T> stack;
+        Stack<Node *> stack;
         Node *current;
 
     public:
+        InnerIterator(Node *root);
+
         bool hasNext() const override;
         T next() override;
     };
+
+    Node *getMinimum(const Node &currentNode) const;
+    Node *getNode(const T &el) const;
+    Node *getNodeSuccessor(const T &el) const;
+
+    IComparator<T> *comparator;
+    Node *root = NULL;
+    int size = 0;
 };
 
 #include "BinarySearchTree.tpp"

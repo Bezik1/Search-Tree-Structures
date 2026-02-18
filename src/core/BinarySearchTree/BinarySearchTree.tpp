@@ -14,17 +14,62 @@ BinarySearchTree<T>::~BinarySearchTree(){
 };
 
 template <typename T>
-BinarySearchTree<T>::Node *BinarySearchTree<T>::getMinimum(const Node &currentNode) const
+IIterator<T> *BinarySearchTree<T>::iterator() const
+{
+    return new InnerIterator(root);
+}
+
+template <typename T>
+BinarySearchTree<T>::InnerIterator::InnerIterator(Node *root)
+    : current(root)
+{
+    while (current != NULL)
+    {
+        stack.push(current);
+        current = current->left;
+    }
+}
+
+template <typename T>
+bool BinarySearchTree<T>::InnerIterator::hasNext() const
+{
+    return !stack.isEmpty();
+}
+
+template <typename T>
+T BinarySearchTree<T>::InnerIterator::next()
+{
+    if (!hasNext())
+        throw std::runtime_error("No more elements in the tree!");
+
+    Node *node = stack.pop();
+    T result = node->value;
+
+    if (node->right != NULL)
+    {
+        Node *temp = node->right;
+        while (temp != NULL)
+        {
+            stack.push(temp);
+            temp = temp->left;
+        }
+    }
+
+    return result;
+}
+
+template <typename T>
+typename BinarySearchTree<T>::Node *BinarySearchTree<T>::getMinimum(const Node &currentNode) const
 {
 }
 
 template <typename T>
-BinarySearchTree<T>::Node *BinarySearchTree<T>::getNode(const T &el) const
+typename BinarySearchTree<T>::Node *BinarySearchTree<T>::getNode(const T &el) const
 {
 }
 
 template <typename T>
-BinarySearchTree<T>::Node *BinarySearchTree<T>::getNodeSuccessor(const T &el) const
+typename BinarySearchTree<T>::Node *BinarySearchTree<T>::getNodeSuccessor(const T &el) const
 {
 }
 

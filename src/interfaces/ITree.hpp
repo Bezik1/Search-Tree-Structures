@@ -6,7 +6,7 @@ template <typename T>
 class ITree
 {
 public:
-    virtual IIterator<T> *iterator() = 0;
+    virtual IIterator<T> *iterator() const = 0;
     virtual ~ITree() = default;
 
     virtual void add(T value) = 0;
