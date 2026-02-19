@@ -8,6 +8,7 @@ int main()
     BinarySearchTree<double> bst(&doubleComparator);
 
     bst.add(5.0);
+    bst.add(10.0);
     bst.add(3.0);
     bst.add(7.0);
     bst.add(1.0);
@@ -22,6 +23,21 @@ int main()
     }
     std::cout << std::endl;
 
+    std::cout << bst.toString() << std::endl;
+
     std::cout << bst.getSize() << std::endl;
+
+    bst.remove(5.0);
+    std::cout << bst.toString() << std::endl;
+    std::cout << bst.getSize() << std::endl;
+
+    bst.remove(3.0);
+    std::cout << bst.toString() << std::endl;
+    std::cout << bst.getSize() << std::endl;
+
+    bst.remove(7.0);
+    std::cout << bst.toString() << std::endl;
+    std::cout << bst.getSize() << std::endl;
+
     return 0;
 }

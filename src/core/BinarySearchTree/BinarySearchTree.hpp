@@ -37,30 +37,40 @@ public:
     BinarySearchTree(IComparator<T> *comp = NULL);
 
     IIterator<T> *iterator() const override;
-    void add(T value) override;
+    T minimum();
+    T maximum();
+    void add(const T &el) override;
     void clear() override;
-    void remove(T el) override;
+    void remove(const T &el) override;
 
+    std::string toString() const override;
     bool contains(T el) const override;
     int getSize() const override;
 
 private:
-    class InnerIterator : public IIterator<T>
+    class Iterator : public IIterator<T>
     {
     private:
         Stack<Node *> stack;
         Node *current;
 
     public:
-        InnerIterator(Node *root);
+        Iterator(Node *root);
 
         bool hasNext() const override;
         T next() override;
     };
 
-    Node *getMinimum(const Node &currentNode) const;
+    static const std::string EMPTY_TREE_MESSAGE;
+
+    void deleteSubtree(Node *node);
+    void transplant(Node *node, Node *child);
+    Node *getMaximumNode(Node *current) const;
+    Node *getMinimumNode(Node *current) const;
     Node *getNode(const T &el) const;
-    Node *getNodeSuccessor(const T &el) const;
+    Node *getNodeSuccessor(const Node *node) const;
+
+    std::string toStringRecursive(const Node *node, int level) const;
 
     IComparator<T> *comparator;
     Node *root = NULL;

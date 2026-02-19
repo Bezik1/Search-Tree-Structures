@@ -2,5 +2,10 @@
 
 int DoubleComparator::compare(const double &el, const double &other) const
 {
-    return el > other;
+    if (el < other)
+        return -1;
+    else if (el > other)
+        return 1;
+    else
+        return 0;
 }
