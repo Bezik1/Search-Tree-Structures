@@ -1,0 +1,331 @@
+\doxysection{Binary\+Search\+Tree\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_binary_search_tree}{}\label{class_binary_search_tree}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+
+
+Dynamic simple binary search tree implementation of interface \doxylink{class_i_tree}{ITree}.  
+
+
+
+
+{\ttfamily \+\#include $<$Binary\+Search\+Tree.\+hpp$>$}
+
+Inheritance diagram for Binary\+Search\+Tree\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_binary_search_tree}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}
+\begin{DoxyCompactList}\small\item\em It\textquotesingle{}s the basic building block of \doxylink{class_binary_search_tree}{Binary\+Search\+Tree}. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_binary_search_tree_1_1_iterator}{Iterator}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_binary_search_tree_a3959625f088828c86e49bf1b63f4cbdf}{\texorpdfstring{$\sim$}{\string~}\+Binary\+Search\+Tree}} ()
+\item 
+\doxymbox{\hyperlink{class_binary_search_tree_afc3062d48500175c1b65844f05da134c}{Binary\+Search\+Tree}} (\doxymbox{\hyperlink{class_i_comparator}{IComparator}}$<$ T $>$ \texorpdfstring{$\ast$}{*}comp=NULL)
+\item 
+\doxymbox{\hyperlink{class_i_iterator}{IIterator}}$<$ T $>$ \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree_ada468cd33a805ae8dc06737bd317f590}{iterator}} () const override
+\item 
+T \doxymbox{\hyperlink{class_binary_search_tree_ab118f664c0a35273bad2f8fc725203b8}{minimum}} ()
+\item 
+T \doxymbox{\hyperlink{class_binary_search_tree_a426d3e203f2d06ffa45b8226d0a54b02}{maximum}} ()
+\item 
+void \doxymbox{\hyperlink{class_binary_search_tree_a310714d9c85a701d704c934829681d92}{add}} (const T \&el) override
+\item 
+void \doxymbox{\hyperlink{class_binary_search_tree_a2df4aac6ff28ca6925c5047b9094d534}{clear}} () override
+\item 
+void \doxymbox{\hyperlink{class_binary_search_tree_a7bef977da13fa8620ae3ff9c14b11d6b}{remove}} (const T \&el) override
+\item 
+std::\+string \doxymbox{\hyperlink{class_binary_search_tree_a6942281245bbd97927e8091137354c2f}{to\+String}} () const override
+\item 
+bool \doxymbox{\hyperlink{class_binary_search_tree_a03fa7264d8cf1aa1c5c1f0324aefe966}{contains}} (T el) const override
+\item 
+int \doxymbox{\hyperlink{class_binary_search_tree_ab2aa35c4a7899f7eae675db2ba22f814}{get\+Size}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_i_tree}{ITree$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_i_tree_a0635eaa358cd77c00ae8b42c15339dbc}{\texorpdfstring{$\sim$}{\string~}\+ITree}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_binary_search_tree_a1525e533dfc7f00ec17c36077badfe08}{delete\+Subtree}} (\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}node)
+\item 
+void \doxymbox{\hyperlink{class_binary_search_tree_a3e148814f94c440a33575a574ba83af4}{transplant}} (\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}node, \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}child)
+\item 
+\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree_a7c62be7daba448aabefe3b3e521ca231}{get\+Maximum\+Node}} (\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}current) const
+\item 
+\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree_aa7b94da1cbe76ddcc679fe442a0e8a81}{get\+Minimum\+Node}} (\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}current) const
+\item 
+\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree_aa3e5d3528561665e821cd4af13cf24f2}{get\+Node}} (const T \&el) const
+\item 
+\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree_a4b62d79c6191dcf8e53be2a40e2044f9}{get\+Node\+Successor}} (const \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}node) const
+\item 
+std::\+string \doxymbox{\hyperlink{class_binary_search_tree_af46d148f1670ebce0c56535bde701fdc}{to\+String\+Recursive}} (const \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}node, int level) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_i_comparator}{IComparator}}$<$ T $>$ \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree_a4d5c03c70989eb090d2f2220102a047f}{comparator}}
+\item 
+\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree_a9bb7cd70e5a18f08f4e02de801c6dfa5}{root}} = NULL
+\item 
+int \doxymbox{\hyperlink{class_binary_search_tree_ae6e2b85441299485946ca6f2d1c348d7}{size}} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const std::\+string \doxymbox{\hyperlink{class_binary_search_tree_a087251a0c69b8dd124af96cfaba12bce}{EMPTY\+\_\+\+TREE\+\_\+\+MESSAGE}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Binary\+Search\+Tree$<$ T $>$}
+Dynamic simple binary search tree implementation of interface \doxylink{class_i_tree}{ITree}. 
+
+BST\textquotesingle{}s are sorted binary tree\textquotesingle{}s, in which each node follows the rule that:\+
+\begin{DoxyItemize}
+\item left child, should be lesser than it\textquotesingle{}s parent;
+\item right child, should be greater than it\textquotesingle{}s parent;
+\end{DoxyItemize}
+
+This fact allows BST for quick data access, removal and addition time. To be specific it operates at O(log n) logarithmic time.
+
+
+\begin{DoxyTable}{2}{}{}{1}
+\SetCell{bg=\tableheadbgcolor,font=\bfseries}Operation&\SetCell{bg=\tableheadbgcolor,font=\bfseries}Time complexity\\
+Addition&O(log n)\\
+Deletion&O(log n)\\
+Search&O(log n)\\
+\end{DoxyTable}
+
+
+BST represents data by objects of class \doxylink{struct_binary_search_tree_1_1_node}{Node} that stores data type T. \doxylink{struct_binary_search_tree_1_1_node}{Node}\textquotesingle{}s are internally connected and to go deeper inside tree, we use \doxylink{class_i_comparator}{IComparator} object, to easily determine the position of desired \doxylink{struct_binary_search_tree_1_1_node}{Node}.
+
+\begin{DoxyNote}{Note}
+In BST order of inserting elements matters and it influence the performance of operations on it. It is happening, because BST may degenerate to the form of link list, if order of elements is inefficient.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{class_i_tree}{ITree} 
+
+\doxylink{class_i_comparator}{IComparator} 
+
+\doxylink{class_i_iterator}{IIterator}
+\end{DoxySeeAlso}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & -\/ represents type of stored data.\\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyAuthor}{Author}
+Mateusz Adamowicz 
+\end{DoxyAuthor}
+
+
+\label{doc-constructors}
+\Hypertarget{class_binary_search_tree_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_binary_search_tree_a3959625f088828c86e49bf1b63f4cbdf}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!````~BinarySearchTree@{\texorpdfstring{$\sim$}{\string~}BinarySearchTree}}
+\index{````~BinarySearchTree@{\texorpdfstring{$\sim$}{\string~}BinarySearchTree}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}BinarySearchTree()}{\string~BinarySearchTree()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a3959625f088828c86e49bf1b63f4cbdf} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+\texorpdfstring{$\sim$}{\string~}\doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_binary_search_tree_afc3062d48500175c1b65844f05da134c}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!BinarySearchTree@{BinarySearchTree}}
+\index{BinarySearchTree@{BinarySearchTree}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{BinarySearchTree()}{BinarySearchTree()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_afc3062d48500175c1b65844f05da134c} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+\+Binary\+Search\+Tree (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_i_comparator}{IComparator}}$<$ T $>$ \texorpdfstring{$\ast$}{*}}]{comp}{ = {\ttfamily NULL}}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_binary_search_tree_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_binary_search_tree_a310714d9c85a701d704c934829681d92}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!add@{add}}
+\index{add@{add}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a310714d9c85a701d704c934829681d92} 
+template$<$typename T$>$ \\
+void \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+add (\begin{DoxyParamCaption}\item[{const T \&}]{el}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_i_tree_a674bdeb1b892e8c770de4bbf9b3eb8bd}{ITree$<$ T $>$}}.
+
+\Hypertarget{class_binary_search_tree_a2df4aac6ff28ca6925c5047b9094d534}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!clear@{clear}}
+\index{clear@{clear}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a2df4aac6ff28ca6925c5047b9094d534} 
+template$<$typename T$>$ \\
+void \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_i_tree_a01c1098192b9068333be7d0e8d846f7e}{ITree$<$ T $>$}}.
+
+\Hypertarget{class_binary_search_tree_a03fa7264d8cf1aa1c5c1f0324aefe966}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!contains@{contains}}
+\index{contains@{contains}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a03fa7264d8cf1aa1c5c1f0324aefe966} 
+template$<$typename T$>$ \\
+bool \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+contains (\begin{DoxyParamCaption}\item[{T}]{el}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_i_tree_ac3d0e656246e6d26a6a9b6ea2e7399f0}{ITree$<$ T $>$}}.
+
+\Hypertarget{class_binary_search_tree_a1525e533dfc7f00ec17c36077badfe08}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!deleteSubtree@{deleteSubtree}}
+\index{deleteSubtree@{deleteSubtree}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{deleteSubtree()}{deleteSubtree()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a1525e533dfc7f00ec17c36077badfe08} 
+template$<$typename T$>$ \\
+void \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+delete\+Subtree (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_binary_search_tree_a7c62be7daba448aabefe3b3e521ca231}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!getMaximumNode@{getMaximumNode}}
+\index{getMaximumNode@{getMaximumNode}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getMaximumNode()}{getMaximumNode()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a7c62be7daba448aabefe3b3e521ca231} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+get\+Maximum\+Node (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}}]{current}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_binary_search_tree_aa7b94da1cbe76ddcc679fe442a0e8a81}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!getMinimumNode@{getMinimumNode}}
+\index{getMinimumNode@{getMinimumNode}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getMinimumNode()}{getMinimumNode()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_aa7b94da1cbe76ddcc679fe442a0e8a81} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+get\+Minimum\+Node (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}}]{current}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_binary_search_tree_aa3e5d3528561665e821cd4af13cf24f2}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!getNode@{getNode}}
+\index{getNode@{getNode}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getNode()}{getNode()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_aa3e5d3528561665e821cd4af13cf24f2} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+get\+Node (\begin{DoxyParamCaption}\item[{const T \&}]{el}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_binary_search_tree_a4b62d79c6191dcf8e53be2a40e2044f9}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!getNodeSuccessor@{getNodeSuccessor}}
+\index{getNodeSuccessor@{getNodeSuccessor}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getNodeSuccessor()}{getNodeSuccessor()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a4b62d79c6191dcf8e53be2a40e2044f9} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+get\+Node\+Successor (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_binary_search_tree_ab2aa35c4a7899f7eae675db2ba22f814}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!getSize@{getSize}}
+\index{getSize@{getSize}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_ab2aa35c4a7899f7eae675db2ba22f814} 
+template$<$typename T$>$ \\
+int \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+get\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_i_tree_a27f91d3fca849296528b731a53252e36}{ITree$<$ T $>$}}.
+
+\Hypertarget{class_binary_search_tree_ada468cd33a805ae8dc06737bd317f590}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!iterator@{iterator}}
+\index{iterator@{iterator}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{iterator()}{iterator()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_ada468cd33a805ae8dc06737bd317f590} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{class_i_iterator}{IIterator}}$<$ T $>$ \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+iterator (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_i_tree_a75f401d4bec91e4160aa9cfee938a8cb}{ITree$<$ T $>$}}.
+
+\Hypertarget{class_binary_search_tree_a426d3e203f2d06ffa45b8226d0a54b02}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!maximum@{maximum}}
+\index{maximum@{maximum}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{maximum()}{maximum()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a426d3e203f2d06ffa45b8226d0a54b02} 
+template$<$typename T$>$ \\
+T \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+maximum (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_binary_search_tree_ab118f664c0a35273bad2f8fc725203b8}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!minimum@{minimum}}
+\index{minimum@{minimum}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{minimum()}{minimum()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_ab118f664c0a35273bad2f8fc725203b8} 
+template$<$typename T$>$ \\
+T \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+minimum (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_binary_search_tree_a7bef977da13fa8620ae3ff9c14b11d6b}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!remove@{remove}}
+\index{remove@{remove}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a7bef977da13fa8620ae3ff9c14b11d6b} 
+template$<$typename T$>$ \\
+void \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+remove (\begin{DoxyParamCaption}\item[{const T \&}]{el}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_i_tree_af49c8b580ff8a0a57a228bd371e7bbd3}{ITree$<$ T $>$}}.
+
+\Hypertarget{class_binary_search_tree_a6942281245bbd97927e8091137354c2f}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!toString@{toString}}
+\index{toString@{toString}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a6942281245bbd97927e8091137354c2f} 
+template$<$typename T$>$ \\
+std::\+string \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+to\+String (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_i_tree_ae472d0aa87a23a87e69405206599bd1c}{ITree$<$ T $>$}}.
+
+\Hypertarget{class_binary_search_tree_af46d148f1670ebce0c56535bde701fdc}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!toStringRecursive@{toStringRecursive}}
+\index{toStringRecursive@{toStringRecursive}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{toStringRecursive()}{toStringRecursive()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_af46d148f1670ebce0c56535bde701fdc} 
+template$<$typename T$>$ \\
+std::\+string \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+to\+String\+Recursive (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{int}]{level}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_binary_search_tree_a3e148814f94c440a33575a574ba83af4}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!transplant@{transplant}}
+\index{transplant@{transplant}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{transplant()}{transplant()}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a3e148814f94c440a33575a574ba83af4} 
+template$<$typename T$>$ \\
+void \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+transplant (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_binary_search_tree_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_binary_search_tree_a4d5c03c70989eb090d2f2220102a047f}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!comparator@{comparator}}
+\index{comparator@{comparator}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{comparator}{comparator}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a4d5c03c70989eb090d2f2220102a047f} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{class_i_comparator}{IComparator}}$<$T$>$\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+comparator\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_binary_search_tree_a087251a0c69b8dd124af96cfaba12bce}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!EMPTY\_TREE\_MESSAGE@{EMPTY\_TREE\_MESSAGE}}
+\index{EMPTY\_TREE\_MESSAGE@{EMPTY\_TREE\_MESSAGE}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{EMPTY\_TREE\_MESSAGE}{EMPTY\_TREE\_MESSAGE}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a087251a0c69b8dd124af96cfaba12bce} 
+template$<$typename T$>$ \\
+const std::\+string \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+\+EMPTY\+\_\+\+TREE\+\_\+\+MESSAGE\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_binary_search_tree_a9bb7cd70e5a18f08f4e02de801c6dfa5}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!root@{root}}
+\index{root@{root}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{root}{root}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_a9bb7cd70e5a18f08f4e02de801c6dfa5} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+root = NULL\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_binary_search_tree_ae6e2b85441299485946ca6f2d1c348d7}\index{BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}!size@{size}}
+\index{size@{size}!BinarySearchTree$<$ T $>$@{BinarySearchTree$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily \label{class_binary_search_tree_ae6e2b85441299485946ca6f2d1c348d7} 
+template$<$typename T$>$ \\
+int \doxymbox{\hyperlink{class_binary_search_tree}{Binary\+Search\+Tree}}$<$ T $>$::\+size = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+src/\+core/\+\+Binary\+Search\+Tree/\+\doxymbox{\hyperlink{_binary_search_tree_8hpp}{Binary\+Search\+Tree.\+hpp}}\end{DoxyCompactItemize}

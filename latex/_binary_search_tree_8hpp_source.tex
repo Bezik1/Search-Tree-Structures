@@ -1,0 +1,86 @@
+\doxysection{Binary\+Search\+Tree.\+hpp}
+\hypertarget{_binary_search_tree_8hpp_source}{}\label{_binary_search_tree_8hpp_source}\index{src/core/BinarySearchTree/BinarySearchTree.hpp@{src/core/BinarySearchTree/BinarySearchTree.hpp}}
+\doxymbox{\hyperlink{_binary_search_tree_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_stack_8hpp}{../../utils/stacks/Stack/Stack.hpp}}"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_tree_8hpp}{../../interfaces/ITree.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_comparator_8hpp}{../../interfaces/IComparator.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_iterator_8hpp}{../../interfaces/IIterator.hpp}}"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00046\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_binary_search_tree_afc3062d48500175c1b65844f05da134c}{BinarySearchTree}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_i_tree}{ITree}}<T>}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a386c2d0d8b67634b5648912d881424a5}{Node}}}
+\DoxyCodeLine{00062\ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ T\ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac90ecbed563871360c910ec69cd021ef}{value}};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a386c2d0d8b67634b5648912d881424a5}{Node}}\ *\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a1813c649caf64c9da85dfd53f11ee23a}{left}};}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a386c2d0d8b67634b5648912d881424a5}{Node}}\ *\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a5912d47e9cc94fb179a621aee86673f2}{right}};}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a386c2d0d8b67634b5648912d881424a5}{Node}}\ *\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac784446c1bf53fa2a282e3e1f078d645}{parent}};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a386c2d0d8b67634b5648912d881424a5}{Node}}(\textcolor{keyword}{const}\ T\ \&\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac90ecbed563871360c910ec69cd021ef}{value}})}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac90ecbed563871360c910ec69cd021ef}{value}}(\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac90ecbed563871360c910ec69cd021ef}{value}}),\ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a1813c649caf64c9da85dfd53f11ee23a}{left}}(NULL),\ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a5912d47e9cc94fb179a621aee86673f2}{right}}(NULL),\ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac784446c1bf53fa2a282e3e1f078d645}{parent}}(NULL)\ \{\};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_af63857df10bf1ecd34aaffa6351747bc}{Node}}(\textcolor{keyword}{const}\ T\ \&\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac90ecbed563871360c910ec69cd021ef}{value}},}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a386c2d0d8b67634b5648912d881424a5}{Node}}\ *\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a1813c649caf64c9da85dfd53f11ee23a}{left}},}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a386c2d0d8b67634b5648912d881424a5}{Node}}\ *\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a5912d47e9cc94fb179a621aee86673f2}{right}},}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a386c2d0d8b67634b5648912d881424a5}{Node}}\ *\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac784446c1bf53fa2a282e3e1f078d645}{parent}})}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac90ecbed563871360c910ec69cd021ef}{value}}(\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac90ecbed563871360c910ec69cd021ef}{value}}),}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a1813c649caf64c9da85dfd53f11ee23a}{left}}(\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a1813c649caf64c9da85dfd53f11ee23a}{left}}),}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a5912d47e9cc94fb179a621aee86673f2}{right}}(\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_a5912d47e9cc94fb179a621aee86673f2}{right}}),}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac784446c1bf53fa2a282e3e1f078d645}{parent}}(\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node_ac784446c1bf53fa2a282e3e1f078d645}{parent}})\ \{\}}
+\DoxyCodeLine{00079\ \ \ \ \ \};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \doxymbox{\hyperlink{class_binary_search_tree_a3959625f088828c86e49bf1b63f4cbdf}{\string~BinarySearchTree}}();}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \doxymbox{\hyperlink{class_binary_search_tree_afc3062d48500175c1b65844f05da134c}{BinarySearchTree}}(\doxymbox{\hyperlink{class_i_comparator}{IComparator<T>}}\ *comp\ =\ NULL);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \doxymbox{\hyperlink{class_i_iterator}{IIterator<T>}}\ *\doxymbox{\hyperlink{class_binary_search_tree_ada468cd33a805ae8dc06737bd317f590}{iterator}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00086\ \ \ \ \ T\ \doxymbox{\hyperlink{class_binary_search_tree_ab118f664c0a35273bad2f8fc725203b8}{minimum}}();}
+\DoxyCodeLine{00087\ \ \ \ \ T\ \doxymbox{\hyperlink{class_binary_search_tree_a426d3e203f2d06ffa45b8226d0a54b02}{maximum}}();}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_binary_search_tree_a310714d9c85a701d704c934829681d92}{add}}(\textcolor{keyword}{const}\ T\ \&el)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_binary_search_tree_a2df4aac6ff28ca6925c5047b9094d534}{clear}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_binary_search_tree_a7bef977da13fa8620ae3ff9c14b11d6b}{remove}}(\textcolor{keyword}{const}\ T\ \&el)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_binary_search_tree_a6942281245bbd97927e8091137354c2f}{toString}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_binary_search_tree_a03fa7264d8cf1aa1c5c1f0324aefe966}{contains}}(T\ el)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_binary_search_tree_ab2aa35c4a7899f7eae675db2ba22f814}{getSize}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_binary_search_tree_1_1_iterator_acc65c683384aecd0ec5b0cffe0dab6b0}{Iterator}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_i_iterator}{IIterator}}<T>}
+\DoxyCodeLine{00098\ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_stack}{Stack<Node\ *>}}\ \doxymbox{\hyperlink{class_binary_search_tree_1_1_iterator_a09f59afa44dcca5fb699b6633cd12d72}{stack}};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *\doxymbox{\hyperlink{class_binary_search_tree_1_1_iterator_a6cb49648ddb7332db8ce4a7b23ffcbc5}{current}};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_binary_search_tree_1_1_iterator_acc65c683384aecd0ec5b0cffe0dab6b0}{Iterator}}(\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *\doxymbox{\hyperlink{class_binary_search_tree_a9bb7cd70e5a18f08f4e02de801c6dfa5}{root}});}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_binary_search_tree_1_1_iterator_a9fa8fbc7f4818684a40ed8a9be036cb1}{hasNext}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ T\ \doxymbox{\hyperlink{class_binary_search_tree_1_1_iterator_ab3d5ca81f2d83004e2292fef592624a7}{next}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00108\ \ \ \ \ \};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ \doxymbox{\hyperlink{class_binary_search_tree_a087251a0c69b8dd124af96cfaba12bce}{EMPTY\_TREE\_MESSAGE}};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_binary_search_tree_a1525e533dfc7f00ec17c36077badfe08}{deleteSubtree}}(\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *node);}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_binary_search_tree_a3e148814f94c440a33575a574ba83af4}{transplant}}(\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *node,\ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *child);}
+\DoxyCodeLine{00114\ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *\doxymbox{\hyperlink{class_binary_search_tree_a7c62be7daba448aabefe3b3e521ca231}{getMaximumNode}}(\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *current)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00115\ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *\doxymbox{\hyperlink{class_binary_search_tree_aa7b94da1cbe76ddcc679fe442a0e8a81}{getMinimumNode}}(\doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *current)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00116\ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *\doxymbox{\hyperlink{class_binary_search_tree_aa3e5d3528561665e821cd4af13cf24f2}{getNode}}(\textcolor{keyword}{const}\ T\ \&el)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00117\ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *\doxymbox{\hyperlink{class_binary_search_tree_a4b62d79c6191dcf8e53be2a40e2044f9}{getNodeSuccessor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *node)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_binary_search_tree_af46d148f1670ebce0c56535bde701fdc}{toStringRecursive}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *node,\ \textcolor{keywordtype}{int}\ level)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \doxymbox{\hyperlink{class_i_comparator}{IComparator<T>}}\ *\doxymbox{\hyperlink{class_binary_search_tree_a4d5c03c70989eb090d2f2220102a047f}{comparator}};}
+\DoxyCodeLine{00122\ \ \ \ \ \doxymbox{\hyperlink{struct_binary_search_tree_1_1_node}{Node}}\ *\doxymbox{\hyperlink{class_binary_search_tree_a9bb7cd70e5a18f08f4e02de801c6dfa5}{root}}\ =\ NULL;}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_binary_search_tree_ae6e2b85441299485946ca6f2d1c348d7}{size}}\ =\ 0;}
+\DoxyCodeLine{00124\ \};}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\#include\ "{}BinarySearchTree.tpp"{}}}
+
+\end{DoxyCode}

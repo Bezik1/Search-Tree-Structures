@@ -8,10 +8,56 @@
 #include "../../interfaces/IComparator.hpp"
 #include "../../interfaces/IIterator.hpp"
 
+/**
+ * @brief Dynamic simple binary search tree implementation of interface ITree.
+ *
+ * @details BST's are sorted binary tree's, in which each node follows the rule that:
+ * - left child, should be lesser than it's parent;
+ * - right child, should be greater than it's parent;
+ *
+ * This fact allows BST for quick data access, removal and addition time. To be specific it
+ * operates at O(log n) logarithmic time.
+ *
+ *
+ * <table>
+ *   <tr><th>Operation</th><th>Time complexity</th></tr>
+ *   <tr><td>Addition</td><td>O(log n)</td></tr>
+ *   <tr><td>Deletion</td><td>O(log n)</td></tr>
+ *   <tr><td>Search</td><td>O(log n)</td></tr>
+ * </table>
+ *
+ * BST represents data by objects of class Node that stores data type T. Node's are
+ * internally connected and to go deeper inside tree, we use IComparator object, to
+ * easily determine the position of desired Node.
+ *
+ * @note In BST order of inserting elements matters and it influence the performance of
+ * operations on it. It is happening, because BST may degenerate to the form of link list,
+ * if order of elements is inefficient.
+ *
+ * @see ITree
+ * @see IComparator
+ * @see IIterator
+ *
+ * @tparam T - represents type of stored data.
+ *
+ * @author Mateusz Adamowicz
+ */
 template <typename T>
 class BinarySearchTree : public ITree<T>
 {
 public:
+    /**
+     * @brief It's the basic building block of BinarySearchTree.
+     *
+     * @details Nodes store informations in BST. They are internally connected, via
+     * pointers to {@link #left}, {@link #right} and {@link #parent}. Left child of the node is smaller than it's parent
+     * and right child is greater than the given node.
+     *
+     * This implementation represents Nodes as a struct, because I didn't see the purpose in creating
+     * the implementation of additional functions inside Node that would be present in class representation.
+     *
+     *
+     */
     struct Node
     {
         T value;
