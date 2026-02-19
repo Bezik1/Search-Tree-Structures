@@ -37,6 +37,7 @@
  * @see ITree
  * @see IComparator
  * @see IIterator
+ * @see Node
  *
  * @tparam T - represents type of stored data.
  *
@@ -56,7 +57,7 @@ public:
      * This implementation represents Nodes as a struct, because I didn't see the purpose in creating
      * the implementation of additional functions inside Node that would be present in class representation.
      *
-     *
+     * Node stores pointers to left, right and parent
      */
     struct Node
     {
@@ -82,11 +83,81 @@ public:
 
     BinarySearchTree(IComparator<T> *comp = NULL);
 
+    /**
+     * @brief Returns the iterator for BinarySearchTree.
+     *
+     * @details Iterator usses `InOrderWalk` method of passing the
+     * search tree. It returns the reference for the object implementing
+     * IIterator interface, in this case it's Iterator private class.
+     *
+     * @see IIterator
+     *
+     * @return IIterator<T>* - iterator
+     */
     IIterator<T> *iterator() const override;
+
+    /**
+     * @brief Returns the miniumum element of the BST.
+     *
+     * @details It uses the key rule of BST, which is that
+     * left child is always smaller, than it's parent. One can
+     * then observe that the leftmost child must be the miniumum.
+     *
+     * For comparison BinarSearchTree uses {@link #comparator} object that
+     * implements IComparator interface.
+     *
+     * The real implementation invoke private {@link #getMinimumNode} method,
+     * with the root as the argument to achievie it.
+     *
+     * @see getMinimumNode
+     * @see IComparator
+     *
+     * @return T - minimum element
+     */
     T minimum();
+
+    /**
+     * @brief Returns the maximum element of the BST.
+     *
+     * @details It uses the key rule of BST, which is that
+     * right child is always greater, than it's parent. One can
+     * then observe that the rightmost child must be the maximum.
+     *
+     * For comparison BinarSearchTree uses {@link #comparator} object that
+     * implements IComparator interface.
+     *
+     * The real implementation invoke private {@link #getMaximumNode} method,
+     * with the root as the argument to achievie it.
+     *
+     * @see getMaximumNode
+     * @see IComparator
+     *
+     * @return T - maximum element
+     */
     T maximum();
+
+    /**
+     * @brief Adds new element to the BinarySearchTree, by following the rules
+     * of BST.
+     *
+     * @details Firstly method find the correct place for new Node, with the usage
+     * of {@link #comparator}. Next it creates new Node, with the given new value of
+     * type T and left and right child as NULL. It checks if the choosen place is root
+     * and if it is i fact, then it replace the reference for the root, with reference
+     * of the new object. However if it isn't than it sets either left or right children of
+     * it's parent as the freshly created object.
+     *
+     * @see IComparator
+     * @see Node
+     *
+     * @throws std::runtime_error - Comparator is undefined!
+     *
+     * @param el - reference for the value of new element to create.
+     */
     void add(const T &el) override;
+
     void clear() override;
+
     void remove(const T &el) override;
 
     std::string toString() const override;
@@ -94,6 +165,24 @@ public:
     int getSize() const override;
 
 private:
+    /**
+     * @brief Implementation of IIterator interface for BinarySearchTree.
+     *
+     * @details This implementation uses `InOrderWalk`, which returnes elements
+     * in the tree in the order of their insertion. It did not implement remove
+     * optional method, because it would be tricky to implement.
+     *
+     * In order to return in order elements in InOrderWalk method Iterator,
+     * uses Stack of pointers to Node objects. This allows this class to collect
+     * all leftmost child of root and then later collect all leftmost child of right
+     * children of the returned by {@link #next} method Node.
+     *
+     *
+     * @see Stack
+     * @see IIterator
+     * @see Node
+     *
+     */
     class Iterator : public IIterator<T>
     {
     private:
@@ -101,9 +190,31 @@ private:
         Node *current;
 
     public:
+        /**
+         * @brief Construct a new Iterator object. It mainly initialize the Stack,
+         * with the leftmost children of the root.
+         *
+         * @param root
+         */
         Iterator(Node *root);
 
+        /**
+         * @brief Checks, if Stack is empty.
+         *
+         * @return true
+         * @return false
+         */
         bool hasNext() const override;
+
+        /**
+         * @brief Returns next object in order of insertion of BinarySearchTree.
+         *
+         * @details Returns the next value of object stored in the stack and
+         * updates the Stack, with the leftmost children of right child of returned
+         * Node.
+         *
+         * @return T - next element
+         */
         T next() override;
     };
 

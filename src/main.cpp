@@ -39,5 +39,7 @@ int main()
     std::cout << bst.toString() << std::endl;
     std::cout << bst.getSize() << std::endl;
 
+    delete iter;
+    
     return 0;
 }
