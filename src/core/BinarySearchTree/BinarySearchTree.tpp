@@ -251,7 +251,7 @@ void BinarySearchTree<T>::remove(const T &el)
         transplant(node, node->left);
     else
     {
-        Node *successor = getMinimumNode(node->right);
+        Node *successor = getNodeSuccessor(node);
         if (successor->parent != node)
         {
             transplant(successor, successor->right);

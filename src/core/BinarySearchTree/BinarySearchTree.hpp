@@ -20,10 +20,10 @@
  *
  *
  * <table>
- *   <tr><th>Operation</th><th>Time complexity</th></tr>
- *   <tr><td>Addition</td><td>O(log n)</td></tr>
- *   <tr><td>Deletion</td><td>O(log n)</td></tr>
- *   <tr><td>Search</td><td>O(log n)</td></tr>
+ *   <tr><th>Operation</th><th>Average Time Complexity</th><th>Worst Time Complexity</th></tr>
+ *   <tr><td>Addition</td><td>O(log n)</td><td>O(n)</td></tr>
+ *   <tr><td>Deletion</td><td>O(log n)</td><td>O(n)</td></tr>
+ *   <tr><td>Search</td><td>O(log n)</td><td>O(n)</td></tr>
  * </table>
  *
  * BST represents data by objects of class Node that stores data type T. Node's are
@@ -32,7 +32,8 @@
  *
  * @note In BST order of inserting elements matters and it influence the performance of
  * operations on it. It is happening, because BST may degenerate to the form of link list,
- * if order of elements is inefficient.
+ * if order of elements is inefficient. To get familiar with implementation that resolve
+ * this problem, see RedBlackTree.
  *
  * @see ITree
  * @see IComparator
@@ -92,7 +93,7 @@ public:
      *
      * @see IIterator
      *
-     * @return IIterator<T>* - iterator
+     * @return IIterator<T>* - iterator.
      */
     IIterator<T> *iterator() const override;
 
@@ -107,12 +108,12 @@ public:
      * implements IComparator interface.
      *
      * The real implementation invoke private {@link #getMinimumNode} method,
-     * with the root as the argument to achievie it.
+     * with the root as the argument to activate it.
      *
      * @see getMinimumNode
      * @see IComparator
      *
-     * @return T - minimum element
+     * @return T - minimum element.
      */
     T minimum();
 
@@ -127,12 +128,12 @@ public:
      * implements IComparator interface.
      *
      * The real implementation invoke private {@link #getMaximumNode} method,
-     * with the root as the argument to achievie it.
+     * with the root as the argument to activate it.
      *
      * @see getMaximumNode
      * @see IComparator
      *
-     * @return T - maximum element
+     * @return T - maximum element.
      */
     T maximum();
 
@@ -156,15 +157,81 @@ public:
      */
     void add(const T &el) override;
 
+    /**
+     * @brief Clears the tree from all the elements.
+     *
+     * @details Clears the tree, by using {@link #deleteSubtree} on root. It
+     * additionally nullifies the pointer to the {@link #root}.
+     *
+     * @see deleteSubtree
+     * @see root
+     *
+     */
     void clear() override;
 
+    /**
+     * @brief Removes the node from the BST and free's the occupied memory.
+     *
+     * @details Removal process depends on three scenarios:
+     * 1. Node does not have a left child;
+     * 2. Node does not have a right child;
+     * 3. Node has both children;
+     *
+     * In such cases, we perform following actions:
+     * 1. We {@link #transplant} node with it's right child;
+     * 2. We {@link #transplant} node with it's left child;
+     * 3. We find the successor of the node and {@link #transplant} node
+     * with it. The successor is selected using {@link #getNodeSuccessor}
+     *
+     * @see transplant
+     * @see getNodeSuccessor
+     *
+     * @param el - reference to the desired element's value.
+     */
     void remove(const T &el) override;
 
-    std::string toString() const override;
+    /**
+     * @brief Searches the BST to find if el is in the tree.
+     *
+     * @details To achievie it, BST uses it's core principles and IComparator
+     * to compare the values of nodes in the tree to find the desired value.
+     * This fact allows BST for average search time of O(log n).
+     *
+     * In fact this method invoke private method {@link #getNode} and compare, if
+     * the result of it is null pointer or not. In such a way mentioned mechanic is being
+     * used.
+     *
+     * @param el - value of searched element
+     *
+     * @see getNode
+     *
+     * @return true.
+     * @return false.
+     */
     bool contains(T el) const override;
+
+    /**
+     * @brief Returns the string representation of the tree.
+     *
+     * @details The string is build in the following format:
+     *
+     * ```
+     * |--> [root]
+     *         |--> [left subtree]
+     *         |--> [right subtree]
+     * ```
+     *
+     * @note In case of empty tree return string is just: {@link #EMPTY_TREE_MESSAGE}
+     *
+     * @return std::string - string representation of the tree.
+     */
+    std::string toString() const override;
+
     int getSize() const override;
 
 private:
+    static const std::string EMPTY_TREE_MESSAGE;
+
     /**
      * @brief Implementation of IIterator interface for BinarySearchTree.
      *
@@ -176,7 +243,6 @@ private:
      * uses Stack of pointers to Node objects. This allows this class to collect
      * all leftmost child of root and then later collect all leftmost child of right
      * children of the returned by {@link #next} method Node.
-     *
      *
      * @see Stack
      * @see IIterator
@@ -201,8 +267,8 @@ private:
         /**
          * @brief Checks, if Stack is empty.
          *
-         * @return true
-         * @return false
+         * @return true.
+         * @return false.
          */
         bool hasNext() const override;
 
@@ -213,20 +279,107 @@ private:
          * updates the Stack, with the leftmost children of right child of returned
          * Node.
          *
-         * @return T - next element
+         * @return T - next element.
          */
         T next() override;
     };
 
-    static const std::string EMPTY_TREE_MESSAGE;
-
+    /**
+     * @brief Delete and free the memory from the node and it's children.
+     *
+     * @details It is done by recursively calling and resolving the memory
+     * of the children of the node with decreasing the size of the collection
+     * and resolving the memory of current node.
+     *
+     * @param node the node of who's all children and itself will be deleted.
+     */
     void deleteSubtree(Node *node);
+
+    /**
+     * @brief Transplant desired node with it's children.
+     *
+     * @details It is enough to swap references and the references of parent
+     * pointing to it's children. In cases, when node is not the root it is also necessary
+     * to swap child parent, with node parent.
+     *
+     * @param node - desired node.
+     * @param child  - it's child.
+     */
     void transplant(Node *node, Node *child);
-    Node *getMaximumNode(Node *current) const;
-    Node *getMinimumNode(Node *current) const;
-    Node *getNode(const T &el) const;
+
+    /**
+     * @brief Finds the Node Successor object (e.g the smallest node that is bigger than the choosen one.
+     *
+     * @details The choice of the successor depends on two scenarious, if node either:
+     * 1. Has the right subtree;
+     * 2. Has not the right subtree;
+     *
+     * In such cases, we perform following actions:
+     * 1. We return the minimum of the right subtree.
+     * 2. We go up the tree via reference to the parent of the current node. We check, whether
+     * node is the left child of it's parent and if in fact it is one, then we return it.
+     *
+     * @param node node for which we choose the successor.
+     * @return Node* - successor.
+     */
     Node *getNodeSuccessor(const Node *node) const;
 
+    /**
+     * @brief Returns the maximum node of the BST.
+     *
+     * @details It uses the key rule of BST, which is that
+     * right child is always greater, than it's parent. One can
+     * then observe that the rightmost child must be the maximum.
+     *
+     * For comparison BinarSearchTree uses {@link #comparator} object that
+     * implements IComparator interface.
+     *
+     * @see getMaximumNode
+     * @see IComparator
+     *
+     * @return T - maximum element.
+     */
+    Node *getMaximumNode(Node *current) const;
+
+    /**
+     * @brief Returns the minmimum node of the BST.
+     *
+     * @details It uses the key rule of BST, which is that
+     * left child is always smaller, than it's parent. One can
+     * then observe that the leftmost child must be the minimum.
+     *
+     * For comparison BinarSearchTree uses {@link #comparator} object that
+     * implements IComparator interface.
+     *
+     *
+     * @see getMinimumNode
+     * @see IComparator
+     *
+     * @return T - minimum element.
+     */
+    Node *getMinimumNode(Node *current) const;
+
+    /**
+     * @brief Searches the BST to find if node is in the tree.
+     *
+     * @details To achievie it, BST uses it's core principles and IComparator
+     * to compare the values of nodes in the tree to find the desired value.
+     * This fact allows BST for average search time of O(log n).
+     *
+     * @param el - value of searched element
+     *
+     * @return Node* - pointer to desired Node.
+     */
+    Node *getNode(const T &el) const;
+
+    /**
+     * @brief Prints the current node of the tree and recursevily call this function on the level below.
+     *
+     * @param node - current node to print
+     * @param level - current level of the tree
+     *
+     * @return std::string - string representation of current node
+     */
     std::string toStringRecursive(const Node *node, int level) const;
 
     IComparator<T> *comparator;
