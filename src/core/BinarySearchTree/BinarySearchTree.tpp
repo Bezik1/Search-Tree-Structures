@@ -267,7 +267,7 @@ void BinarySearchTree<T>::remove(const T &el)
 }
 
 template <typename T>
-bool BinarySearchTree<T>::contains(T el) const
+bool BinarySearchTree<T>::contains(const T &el) const
 {
     return getNode(el) != NULL;
 }

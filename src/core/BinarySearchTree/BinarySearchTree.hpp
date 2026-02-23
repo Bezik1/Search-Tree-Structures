@@ -18,7 +18,6 @@
  * This fact allows BST for quick data access, removal and addition time. To be specific it
  * operates at O(log n) logarithmic time.
  *
- *
  * <table>
  *   <tr><th>Operation</th><th>Average Time Complexity</th><th>Worst Time Complexity</th></tr>
  *   <tr><td>Addition</td><td>O(log n)</td><td>O(n)</td></tr>
@@ -35,6 +34,11 @@
  * if order of elements is inefficient. To get familiar with implementation that resolve
  * this problem, see RedBlackTree.
  *
+ * @todo
+ * 1. Create a copy constructor;
+ * 2. Create copy assignment operator;
+ * 3. Implement comparator == NULL, checking where needed;
+ *
  * @see ITree
  * @see IComparator
  * @see IIterator
@@ -48,38 +52,6 @@ template <typename T>
 class BinarySearchTree : public ITree<T>
 {
 public:
-    /**
-     * @brief It's the basic building block of BinarySearchTree.
-     *
-     * @details Nodes store informations in BST. They are internally connected, via
-     * pointers to {@link #left}, {@link #right} and {@link #parent}. Left child of the node is smaller than it's parent
-     * and right child is greater than the given node.
-     *
-     * This implementation represents Nodes as a struct, because I didn't see the purpose in creating
-     * the implementation of additional functions inside Node that would be present in class representation.
-     *
-     * Node stores pointers to left, right and parent
-     */
-    struct Node
-    {
-        T value;
-        Node *left;
-        Node *right;
-        Node *parent;
-
-        Node(const T &value)
-            : value(value), left(NULL), right(NULL), parent(NULL) {};
-
-        Node(const T &value,
-             Node *left,
-             Node *right,
-             Node *parent)
-            : value(value),
-              left(left),
-              right(right),
-              parent(parent) {}
-    };
-
     ~BinarySearchTree();
 
     BinarySearchTree(IComparator<T> *comp = NULL);
@@ -208,7 +180,7 @@ public:
      * @return true.
      * @return false.
      */
-    bool contains(T el) const override;
+    bool contains(const T &el) const override;
 
     /**
      * @brief Returns the string representation of the tree.
@@ -225,7 +197,7 @@ public:
      *
      * @return std::string - string representation of the tree.
      */
-    std::string toString() const override;
+    std::string toString() const;
 
     int getSize() const override;
 
@@ -233,10 +205,42 @@ private:
     static const std::string EMPTY_TREE_MESSAGE;
 
     /**
+     * @brief It's the basic building block of BinarySearchTree.
+     *
+     * @details Nodes store informations in BST. They are internally connected, via
+     * pointers to {@link #left}, {@link #right} and {@link #parent}. Left child of the node is smaller than it's parent
+     * and right child is greater than the given node.
+     *
+     * This implementation represents Nodes as a struct, because I didn't see the purpose in creating
+     * the implementation of additional functions inside Node that would be present in class representation.
+     *
+     * Node stores pointers to left, right and parent
+     */
+    struct Node
+    {
+        T value;
+        Node *left;
+        Node *right;
+        Node *parent;
+
+        Node(const T &value)
+            : value(value), left(NULL), right(NULL), parent(NULL) {};
+
+        Node(const T &value,
+             Node *left,
+             Node *right,
+             Node *parent)
+            : value(value),
+              left(left),
+              right(right),
+              parent(parent) {}
+    };
+
+    /**
      * @brief Implementation of IIterator interface for BinarySearchTree.
      *
      * @details This implementation uses `InOrderWalk`, which returnes elements
-     * in the tree in the order of their insertion. It did not implement remove
+     * in the tree in the sotred order. It did not implement remove
      * optional method, because it would be tricky to implement.
      *
      * In order to return in order elements in InOrderWalk method Iterator,
@@ -273,7 +277,7 @@ private:
         bool hasNext() const override;
 
         /**
-         * @brief Returns next object in order of insertion of BinarySearchTree.
+         * @brief Returns next object in sorted order of BinarySearchTree.
          *
          * @details Returns the next value of object stored in the stack and
          * updates the Stack, with the leftmost children of right child of returned

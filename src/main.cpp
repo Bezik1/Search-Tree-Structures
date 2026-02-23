@@ -40,6 +40,6 @@ int main()
     std::cout << bst.getSize() << std::endl;
 
     delete iter;
-    
+
     return 0;
 }

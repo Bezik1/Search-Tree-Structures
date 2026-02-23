@@ -5,6 +5,12 @@
 
 #include "../../../interfaces/IStack.hpp"
 
+/**
+ * @brief Simple implementation of IStack interface, with std::vector, as
+ * a storing collection.
+ *
+ * @tparam T
+ */
 template <typename T>
 class Stack : public IStack<T>
 {
