@@ -20,7 +20,7 @@ protected:
     }
 };
 
-TEST_F(BSTTest, InsertionAndSize)
+TEST_F(BSTTest, InsertionAndSizeTest)
 {
     bst->add(5.0);
     bst->add(10.0);
@@ -29,7 +29,7 @@ TEST_F(BSTTest, InsertionAndSize)
     EXPECT_EQ(bst->getSize(), 3);
 }
 
-TEST_F(BSTTest, IteratorOrder)
+TEST_F(BSTTest, IteratorOrderTest)
 {
     bst->add(5.0);
     bst->add(3.0);
@@ -46,7 +46,7 @@ TEST_F(BSTTest, IteratorOrder)
     delete iter;
 }
 
-TEST_F(BSTTest, Removal)
+TEST_F(BSTTest, RemovalTest)
 {
     bst->add(5.0);
     bst->add(3.0);
