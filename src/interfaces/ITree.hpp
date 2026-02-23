@@ -94,5 +94,5 @@ public:
      *
      * @return std::string
      */
-    virtual std::string toString() {};
+    virtual std::string toString() const = 0;
 };

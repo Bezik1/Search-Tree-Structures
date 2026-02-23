@@ -3,7 +3,14 @@
 #include "../../src/core/BinarySearchTree/BinarySearchTree.hpp"
 #include "../../src/utils/comparators/DoubleComparator/DoubleComparator.hpp"
 
-class BSTTest : public ::testing::Test
+/**
+ * @brief Tests for BinarySearchTree class.
+ *
+ * @todo Create more reliable tests.
+ *
+ * @test
+ */
+class BSTUnitTest : public ::testing::Test
 {
 protected:
     DoubleComparator comparator;
@@ -20,7 +27,7 @@ protected:
     }
 };
 
-TEST_F(BSTTest, InsertionAndSizeTest)
+TEST_F(BSTUnitTest, InsertionAndSizeTest)
 {
     bst->add(5.0);
     bst->add(10.0);
@@ -29,7 +36,7 @@ TEST_F(BSTTest, InsertionAndSizeTest)
     EXPECT_EQ(bst->getSize(), 3);
 }
 
-TEST_F(BSTTest, IteratorOrderTest)
+TEST_F(BSTUnitTest, IteratorOrderTest)
 {
     bst->add(5.0);
     bst->add(3.0);
@@ -46,7 +53,7 @@ TEST_F(BSTTest, IteratorOrderTest)
     delete iter;
 }
 
-TEST_F(BSTTest, RemovalTest)
+TEST_F(BSTUnitTest, RemovalTest)
 {
     bst->add(5.0);
     bst->add(3.0);

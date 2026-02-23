@@ -32,6 +32,8 @@
  * @see Node
  *
  * @tparam T
+ *
+ * @author Mateusz Adamowicz
  */
 template <typename T>
 class RedBlackTree : public ITree<T>
