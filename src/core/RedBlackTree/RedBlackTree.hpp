@@ -39,7 +39,7 @@ class RedBlackTree : public ITree<T>
 public:
     ~RedBlackTree();
 
-    IIterator *iterator() const override;
+    IIterator<T> *iterator() const override;
 
     T minimum();
 
@@ -169,6 +169,6 @@ private:
     IComparator<T> *comparator;
     Node *root = NULL;
     int size = 0;
-}
+};
 
 #include "RedBlackTree.tpp"
