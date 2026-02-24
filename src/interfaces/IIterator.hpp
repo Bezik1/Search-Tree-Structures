@@ -19,7 +19,8 @@
  * ```
  *
  * @todo
- * 1. Implement * operator;
+ * 1. Finish comments.
+ * 2. Implement * operator;
  *
  * @tparam T - type of stored data inside collection of iterator.
  */

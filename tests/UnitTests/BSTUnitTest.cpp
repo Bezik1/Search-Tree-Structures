@@ -10,7 +10,7 @@
  *
  * @test
  */
-class BSTUnitTest : public ::testing::Test
+class BSTUnitTest : public testing::Test
 {
 protected:
     DoubleComparator comparator;
@@ -33,7 +33,7 @@ TEST_F(BSTUnitTest, InsertionAndSizeTest)
     bst->add(10.0);
     bst->add(3.0);
 
-    EXPECT_EQ(bst->getSize(), 3);
+    ASSERT_EQ(bst->getSize(), 3) << "Binary Search Tree size is not matching it's predicted value!";
 }
 
 TEST_F(BSTUnitTest, IteratorOrderTest)
