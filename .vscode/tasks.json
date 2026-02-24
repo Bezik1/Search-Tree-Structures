@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Code",
+            "type": "shell",
+            "command": "mkdir -p bin && clang++ -std=c++17 -g $(find src -type f -name '*.cpp') -w -o bin/main",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Build Tests",
+            "type": "shell",
+            "command": "mkdir -p bin && clang++ -std=c++17 -g -w $(find src -type f -name '*.cpp' ! -name 'main.cpp') $(find tests -type f -name '*.cpp') -o bin/tests -I/opt/homebrew/include -L/opt/homebrew/lib -lgtest -lgtest_main -lpthread",
+            "group": "build"
+        }
+    ]
+}

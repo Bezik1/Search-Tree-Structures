@@ -1,1 +1,3 @@
-chmod u+x .git/hooks/*
+doxygen -g
+doxygen
+chmod u+x .git/hooks/\*
