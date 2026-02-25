@@ -7,7 +7,7 @@
  * @brief Tests for RedBlackTree class.
  *
  * @todo
- * 1. Create more reliable tests;
+ * 1. Create tests for checking the internal structure of the tree;
  *
  * @test
  */

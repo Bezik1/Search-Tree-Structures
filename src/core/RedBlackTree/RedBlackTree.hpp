@@ -24,9 +24,6 @@
  * @todo
  * 1. Create a copy constructor;
  * 2. Create copy assignment operator;
- * 3. Create [NIL  / Leaf] Node that will be used instead of NULL Nodes. This problem is specificly visible in
- * {@link #fixTreeAfterRemoval}
- * 4. Update {@link #toString} method to include information about node color.
  *
  *
  * @see ITree
@@ -184,6 +181,19 @@ public:
      */
     std::string toString() const;
 
+    /**
+     * @brief Checks if current structure correctly represents RBT.
+     *
+     * @details This function validates the 5th rule of RBT, which is that all
+     * black height of the tree must be equal.
+     *
+     * @see validateRules
+     *
+     * @return true
+     * @return false
+     */
+    bool isValid() const;
+
     int getSize() const override;
 
 private:
@@ -213,9 +223,6 @@ private:
         Node *right;
         Node *parent;
 
-        Node(const T &value)
-            : value(value), left(NULL), right(NULL), parent(NULL), color(true) {};
-
         Node(const T &value,
              bool color,
              Node *left,
@@ -227,6 +234,16 @@ private:
               right(right),
               parent(parent) {}
     };
+
+    /**
+     * @brief Sentinel Node that represents leafs of the tree.
+     *
+     * @details It represents leaf with pointers to left and right as a NIL.
+     *
+     * @see Node
+     *
+     */
+    Node *NIL;
 
     /**
      * @brief Implementation of IIterator interface for RedBlackTree.
@@ -250,6 +267,7 @@ private:
     private:
         Stack<Node *> stack;
         Node *current;
+        Node *nil;
 
     public:
         /**
@@ -258,7 +276,7 @@ private:
          *
          * @param root
          */
-        Iterator(Node *root);
+        Iterator(Node *root, Node *nil);
 
         /**
          * @brief Checks, if Stack is empty.
@@ -477,6 +495,18 @@ private:
      * @return std::string - string representation of current node
      */
     std::string toStringRecursive(const Node *node, int level) const;
+
+    /**
+     * @brief Checks if from the specified node, all of it's children have the same number of black nodes
+     * at the path to this node
+     *
+     * @param node - specified node.
+     * @param currentBlackCount - true black nodes count.
+     * @param expectedBlackCount - expected black nodes count.
+     * @return true
+     * @return false
+     */
+    bool validateRules(Node *node, int currentBlackCount, int &expectedBlackCount) const;
 
     IComparator<T> *comparator;
     Node *root = NULL;
