@@ -20,7 +20,7 @@
  *
  * @todo
  * 1. Finish comments.
- * 2. Implement * operator;
+ * 2. Refactor this iterator as a STL iterator;
  *
  * @tparam T - type of stored data inside collection of iterator.
  */

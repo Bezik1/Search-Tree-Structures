@@ -85,6 +85,8 @@ public:
      * @see getMinimumNode
      * @see IComparator
      *
+     * @throws std::runtime_error - Tree is empty!
+     *
      * @return T - minimum element.
      */
     T minimum();
@@ -104,6 +106,8 @@ public:
      *
      * @see getMaximumNode
      * @see IComparator
+     *
+     * @throws std::runtime_error - Tree is empty!
      *
      * @return T - maximum element.
      */
@@ -157,6 +161,8 @@ public:
      *
      * @see transplant
      * @see getNodeSuccessor
+     *
+     * @throws std::runtime_error - Didn't find desired node!
      *
      * @param el - reference to the desired element's value.
      */
@@ -214,7 +220,6 @@ private:
      * This implementation represents Nodes as a struct, because I didn't see the purpose in creating
      * the implementation of additional functions inside Node that would be present in class representation.
      *
-     * Node stores pointers to left, right and parent
      */
     struct Node
     {
@@ -247,6 +252,8 @@ private:
      * uses Stack of pointers to Node objects. This allows this class to collect
      * all leftmost child of root and then later collect all leftmost child of right
      * children of the returned by {@link #next} method Node.
+     *
+     * @note This iterator is no longer valid, after changing the state of this structure.
      *
      * @see Stack
      * @see IIterator

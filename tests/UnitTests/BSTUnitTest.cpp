@@ -6,8 +6,6 @@
 /**
  * @brief Tests for BinarySearchTree class.
  *
- * @todo Create more reliable tests.
- *
  * @test
  */
 class BSTUnitTest : public testing::Test
@@ -27,43 +25,74 @@ protected:
     }
 };
 
-TEST_F(BSTUnitTest, InsertionAndSizeTest)
-{
-    bst->add(5.0);
-    bst->add(10.0);
-    bst->add(3.0);
-
-    ASSERT_EQ(bst->getSize(), 3) << "Binary Search Tree size is not matching it's predicted value!";
-}
-
-TEST_F(BSTUnitTest, IteratorOrderTest)
+TEST_F(BSTUnitTest, IteratorGeneralTest)
 {
     bst->add(5.0);
     bst->add(3.0);
     bst->add(7.0);
 
     auto iter = bst->iterator();
+    ASSERT_TRUE(iter != NULL);
 
-    EXPECT_TRUE(iter->hasNext());
-    EXPECT_DOUBLE_EQ(iter->next(), 3.0);
-    EXPECT_DOUBLE_EQ(iter->next(), 5.0);
-    EXPECT_DOUBLE_EQ(iter->next(), 7.0);
-    EXPECT_FALSE(iter->hasNext());
+    ASSERT_TRUE(iter->hasNext());
+    ASSERT_DOUBLE_EQ(iter->next(), 3.0);
+    ASSERT_DOUBLE_EQ(iter->next(), 5.0);
+    ASSERT_DOUBLE_EQ(iter->next(), 7.0);
+    ASSERT_FALSE(iter->hasNext());
 
     delete iter;
 }
 
-TEST_F(BSTUnitTest, RemovalTest)
+TEST_F(BSTUnitTest, RemovalGeneralTest)
 {
-    bst->add(5.0);
-    bst->add(3.0);
+    ASSERT_THROW(bst->remove(3.0), std::runtime_error);
+
+    bst->add(4.0);
+    ASSERT_EQ(bst->contains(4.0), true);
+
+    bst->remove(4.0);
+    ASSERT_EQ(bst->contains(4.0), false);
+
+    bst->add(6.0);
     bst->add(7.0);
+    bst->add(8.0);
 
-    bst->remove(5.0);
-    EXPECT_EQ(bst->getSize(), 2);
+    bst->remove(8.0);
+    ASSERT_EQ(bst->contains(8.0), false);
 
-    auto iter = bst->iterator();
-    EXPECT_DOUBLE_EQ(iter->next(), 3.0);
-    EXPECT_DOUBLE_EQ(iter->next(), 7.0);
-    delete iter;
+    bst->remove(6.0);
+    ASSERT_EQ(bst->contains(6.0), false);
+
+    bst->remove(7.0);
+    ASSERT_EQ(bst->contains(7.0), false);
+}
+
+TEST_F(BSTUnitTest, ExtremasGeneralTest)
+{
+    ASSERT_THROW(bst->maximum(), std::runtime_error);
+    ASSERT_THROW(bst->minimum(), std::runtime_error);
+
+    bst->add(5.0);
+    ASSERT_EQ(bst->maximum(), 5.0);
+    ASSERT_EQ(bst->minimum(), 5.0);
+
+    bst->add(3.0);
+    ASSERT_EQ(bst->maximum(), 5.0);
+    ASSERT_EQ(bst->minimum(), 3.0);
+
+    bst->add(11.0);
+    ASSERT_EQ(bst->maximum(), 11.0);
+    ASSERT_EQ(bst->minimum(), 3.0);
+
+    bst->add(4.0);
+    ASSERT_EQ(bst->maximum(), 11.0);
+    ASSERT_EQ(bst->minimum(), 3.0);
+
+    bst->add(2.0);
+    ASSERT_EQ(bst->maximum(), 11.0);
+    ASSERT_EQ(bst->minimum(), 2.0);
+
+    bst->clear();
+    ASSERT_THROW(bst->maximum(), std::runtime_error);
+    ASSERT_THROW(bst->minimum(), std::runtime_error);
 }

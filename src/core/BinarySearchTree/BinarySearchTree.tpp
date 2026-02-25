@@ -120,13 +120,19 @@ void BinarySearchTree<T>::transplant(Node *node, Node *child)
 template <typename T>
 T BinarySearchTree<T>::maximum()
 {
-    return getMaximumNode(root)->value;
+    Node *node = getMaximumNode(root);
+    if (!node)
+        throw std::runtime_error("Tree is empty");
+    return node->value;
 }
 
 template <typename T>
 T BinarySearchTree<T>::minimum()
 {
-    return getMinimumNode(root)->value;
+    Node *node = getMinimumNode(root);
+    if (!node)
+        throw std::runtime_error("Tree is empty");
+    return node->value;
 }
 
 template <typename T>
@@ -226,7 +232,6 @@ void BinarySearchTree<T>::add(const T &el)
         else
             currentParent->right = newNode;
     }
-
     size++;
 }
 
@@ -242,8 +247,9 @@ template <typename T>
 void BinarySearchTree<T>::remove(const T &el)
 {
     Node *node = getNode(el);
-    if (!node)
-        return;
+
+    if (node == NULL)
+        throw std::runtime_error("Didn't find desired node!");
 
     if (!node->left)
         transplant(node, node->right);
@@ -262,6 +268,7 @@ void BinarySearchTree<T>::remove(const T &el)
         successor->left = node->left;
         successor->left->parent = successor;
     }
+
     delete node;
     size--;
 }
