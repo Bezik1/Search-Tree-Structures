@@ -15,7 +15,14 @@ jobs:
     - name: Compile Tests
       run: |
         mkdir -p bin
-        clang++ -std=c++23 $(find src -type f -name '*.cpp' ! -name 'main.cpp') $(find tests -type f -name '*.cpp') -o bin/tests -I/usr/local/include -L/usr/local/lib -lgtest -lgtest_main -lpthread
+        BREW_PREFIX=$(brew --prefix googletest)
+        clang++ -std=c++23 \
+          $(find src -type f -name '*.cpp' ! -name 'main.cpp') \
+          $(find tests -type f -name '*.cpp') \
+          -o bin/tests \
+          -I$BREW_PREFIX/include \
+          -L$BREW_PREFIX/lib \
+          -lgtest -lgtest_main -lpthread
 
     - name: Run Tests
       run: ./bin/tests
