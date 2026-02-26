@@ -9,20 +9,18 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install GoogleTest
-      run: brew install googletest
-
-    - name: Compile Tests
+    - name: Install dependencies
       run: |
-        mkdir -p bin
-        BREW_PREFIX=$(brew --prefix googletest)
-        clang++ -std=c++23 \
-          $(find src -type f -name '*.cpp' ! -name 'main.cpp') \
-          $(find tests -type f -name '*.cpp') \
-          -o bin/tests \
-          -I$BREW_PREFIX/include \
-          -L$BREW_PREFIX/lib \
-          -lgtest -lgtest_main -lpthread
+        brew install cmake googletest qt6
 
-    - name: Run Tests
-      run: ./bin/tests
+    - name: Configure project
+      run: |
+        cmake -S . -B build -DCMAKE_PREFIX_PATH=$(brew --prefix qt6)
+
+    - name: Build tests
+      run: |
+        cmake --build build --target tests
+
+    - name: Run tests
+      run: |
+        cd build && ./tests

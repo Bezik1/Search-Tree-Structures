@@ -1,8 +1,11 @@
 # Project
 /data
+
 /html
 /latex
+
 /bin
+/build
 
 main
 

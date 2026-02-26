@@ -2,21 +2,15 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build Code",
+            "label": "Build App",
             "type": "shell",
-            "command": "mkdir -p bin && clang++ -std=c++23 -g $(find src -type f -name '*.cpp') -w -o bin/main",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": [
-                "$gcc"
-            ]
+            "command": "cmake --build build --target main",
+            "group": "build"
         },
         {
             "label": "Build Tests",
             "type": "shell",
-            "command": "mkdir -p bin && clang++ -std=c++23 -g -w $(find src -type f -name '*.cpp' ! -name 'main.cpp') $(find tests -type f -name '*.cpp') -o bin/tests -I/opt/homebrew/include -L/opt/homebrew/lib -lgtest -lgtest_main -lpthread",
+            "command": "cmake --build build --target tests",
             "group": "build"
         }
     ]

@@ -5,7 +5,7 @@
 
 int main()
 {
-    RedBlackTree<double> rbt();
+    RedBlackTree<double> rbt;
 
     rbt.add(10.0);
     std::cout << rbt.toString() << std::endl;
