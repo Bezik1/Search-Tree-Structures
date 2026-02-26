@@ -2,12 +2,10 @@
 
 #include "core/BinarySearchTree/BinarySearchTree.hpp"
 #include "core/RedBlackTree/RedBlackTree.hpp"
-#include "utils/comparators/DoubleComparator/DoubleComparator.hpp"
 
 int main()
 {
-    DoubleComparator comparator;
-    RedBlackTree<double> rbt(&comparator);
+    RedBlackTree<double> rbt();
 
     rbt.add(10.0);
     std::cout << rbt.toString() << std::endl;

@@ -1,25 +1,24 @@
 #include <gtest/gtest.h>
 
 #include "../../src/core/RedBlackTree/RedBlackTree.hpp"
-#include "../../src/utils/comparators/DoubleComparator/DoubleComparator.hpp"
 
 /**
  * @brief Tests for RedBlackTree class.
  *
  * @todo
  * 1. Create tests for checking the internal structure of the tree;
+ * 2. Refactor this test to implement C++ 23;
  *
  * @test
  */
 class RBTUnitTest : public testing::Test
 {
 protected:
-    DoubleComparator comparator;
     RedBlackTree<double> *rbt;
 
     void SetUp() override
     {
-        rbt = new RedBlackTree<double>(&comparator);
+        rbt = new RedBlackTree<double>();
     }
 
     void TearDown() override
@@ -48,8 +47,6 @@ TEST_F(RBTUnitTest, IteratorGeneralTest)
     ASSERT_DOUBLE_EQ(iter->next(), 10.0);
     ASSERT_DOUBLE_EQ(iter->next(), 11.0);
     ASSERT_FALSE(iter->hasNext());
-
-    delete iter;
 }
 
 TEST_F(RBTUnitTest, RemovalGeneralTest)

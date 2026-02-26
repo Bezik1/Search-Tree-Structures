@@ -1,31 +1,90 @@
 #pragma once
 
+#include <format>
+#include <memory>
+
+#include "../../concepts/Comparable.hpp"
+
 #include "RedBlackTree.hpp"
 
-template <typename T>
+template <Comparable T>
 const std::string RedBlackTree<T>::EMPTY_TREE_MESSAGE = "Empty Tree";
 
-template <typename T>
-RedBlackTree<T>::RedBlackTree(IComparator<T> *comp) : comparator(comp)
+template <Comparable T>
+RedBlackTree<T>::RedBlackTree() noexcept
 {
-    NIL = new Node(T(), true, NULL, NULL, NULL);
+    NIL = new Node(T(), NodeColor::Black, nullptr, nullptr, nullptr);
     NIL->left = NIL->right = NIL->parent = NIL;
 
     root = NIL;
     size = 0;
 }
 
-template <typename T>
-RedBlackTree<T>::~RedBlackTree()
+template <Comparable T>
+RedBlackTree<T>::~RedBlackTree() noexcept
 {
     deleteSubtree(root);
-    root = NULL;
+    root = nullptr;
     size = 0;
 
     delete NIL;
 }
 
-template <typename T>
+template <Comparable T>
+RedBlackTree<T>::RedBlackTree(const RedBlackTree &other)
+{
+    NIL = new Node(T(), NodeColor::Black, nullptr, nullptr, nullptr);
+    root = copySubtree(other.root, nullptr);
+    size = other.size;
+}
+
+template <Comparable T>
+RedBlackTree<T> &RedBlackTree<T>::operator=(RedBlackTree other)
+{
+    std::swap(root, other.root);
+    std::swap(NIL, other.NIL);
+    std::swap(size, other.size);
+    return *this;
+}
+
+template <Comparable T>
+typename RedBlackTree<T>::Node *RedBlackTree<T>::copySubtree(Node *node, Node *parent)
+{
+    if (node == nullptr || node == NIL)
+        return NIL;
+
+    Node *newNode = new Node(node->value, node->color, nullptr, nullptr, parent);
+    newNode->left = copySubtree(node->left, newNode);
+    newNode->right = copySubtree(node->right, newNode);
+    return newNode;
+}
+
+template <Comparable T>
+RedBlackTree<T>::RedBlackTree(RedBlackTree &&other) noexcept
+    : root(other.root), NIL(other.NIL), size(other.size)
+{
+    other.root = nullptr;
+    other.NIL = nullptr;
+    other.size = 0;
+}
+
+template <Comparable T>
+RedBlackTree<T> &RedBlackTree<T>::operator=(RedBlackTree &&other) noexcept
+{
+    if (this != &other)
+    {
+        clear();
+        delete NIL;
+        root = other.root;
+        NIL = other.NIL;
+        size = other.size;
+        other.root = nullptr;
+        other.NIL = nullptr;
+    }
+    return *this;
+}
+
+template <Comparable T>
 void RedBlackTree<T>::clear()
 {
     deleteSubtree(root);
@@ -33,13 +92,13 @@ void RedBlackTree<T>::clear()
     size = 0;
 }
 
-template <typename T>
-IIterator<T> *RedBlackTree<T>::iterator() const
+template <Comparable T>
+std::unique_ptr<IIterator<T>> RedBlackTree<T>::iterator() const noexcept
 {
-    return new Iterator(root, NIL);
+    return std::make_unique<Iterator>(root, NIL);
 }
 
-template <typename T>
+template <Comparable T>
 RedBlackTree<T>::Iterator::Iterator(Node *root, Node *nil)
     : current(root), nil(nil)
 {
@@ -50,13 +109,13 @@ RedBlackTree<T>::Iterator::Iterator(Node *root, Node *nil)
     }
 }
 
-template <typename T>
+template <Comparable T>
 bool RedBlackTree<T>::Iterator::hasNext() const
 {
     return !stack.isEmpty();
 }
 
-template <typename T>
+template <Comparable T>
 T RedBlackTree<T>::Iterator::next()
 {
     if (!hasNext())
@@ -78,7 +137,7 @@ T RedBlackTree<T>::Iterator::next()
     return result;
 }
 
-template <typename T>
+template <Comparable T>
 std::string RedBlackTree<T>::toString() const
 {
     if (root == NIL)
@@ -86,7 +145,7 @@ std::string RedBlackTree<T>::toString() const
     return toStringRecursive(root, 0);
 }
 
-template <typename T>
+template <Comparable T>
 std::string RedBlackTree<T>::toStringRecursive(const Node *node, int level) const
 {
     if (node == NIL)
@@ -97,11 +156,11 @@ std::string RedBlackTree<T>::toStringRecursive(const Node *node, int level) cons
     for (int i = 0; i < level; ++i)
         result += "\t";
 
-    result +=
-        "|--> " +
-        std::to_string(node->value) +
-        (node->color ? " [BLACK]" : " [RED]") +
-        "\n";
+    result += std::format("|--> {} [{}]\n",
+                          node->value,
+                          node->color == NodeColor::Black
+                              ? "BLACK"
+                              : "RED");
 
     result += toStringRecursive(node->left, level + 1);
     result += toStringRecursive(node->right, level + 1);
@@ -109,7 +168,7 @@ std::string RedBlackTree<T>::toStringRecursive(const Node *node, int level) cons
     return result;
 }
 
-template <typename T>
+template <Comparable T>
 void RedBlackTree<T>::deleteSubtree(Node *node)
 {
     if (node == NIL)
@@ -121,8 +180,8 @@ void RedBlackTree<T>::deleteSubtree(Node *node)
     delete node;
 }
 
-template <typename T>
-void RedBlackTree<T>::transplant(Node *node, Node *child)
+template <Comparable T>
+void RedBlackTree<T>::transplant(Node *node, Node *child) noexcept
 {
     if (node->parent == NIL)
         root = child;
@@ -135,7 +194,7 @@ void RedBlackTree<T>::transplant(Node *node, Node *child)
         child->parent = node->parent;
 }
 
-template <typename T>
+template <Comparable T>
 T RedBlackTree<T>::maximum()
 {
     Node *node = getMaximumNode(root);
@@ -144,7 +203,7 @@ T RedBlackTree<T>::maximum()
     return node->value;
 }
 
-template <typename T>
+template <Comparable T>
 T RedBlackTree<T>::minimum()
 {
     Node *node = getMinimumNode(root);
@@ -153,10 +212,10 @@ T RedBlackTree<T>::minimum()
     return node->value;
 }
 
-template <typename T>
+template <Comparable T>
 typename RedBlackTree<T>::Node *RedBlackTree<T>::getMinimumNode(Node *current) const
 {
-    if (current == NIL || current == NULL)
+    if (current == NIL || current == nullptr)
         return NIL;
 
     Node *temp = current;
@@ -166,10 +225,10 @@ typename RedBlackTree<T>::Node *RedBlackTree<T>::getMinimumNode(Node *current) c
     return temp;
 }
 
-template <typename T>
+template <Comparable T>
 typename RedBlackTree<T>::Node *RedBlackTree<T>::getMaximumNode(Node *current) const
 {
-    if (current == NIL || current == NULL)
+    if (current == NIL || current == nullptr)
         return NIL;
 
     Node *temp = current;
@@ -179,36 +238,33 @@ typename RedBlackTree<T>::Node *RedBlackTree<T>::getMaximumNode(Node *current) c
     return temp;
 }
 
-template <typename T>
+template <Comparable T>
 bool RedBlackTree<T>::contains(const T &el) const
 {
-    return getNode(el) != NULL;
+    return getNode(el) != nullptr;
 }
 
-template <typename T>
+template <Comparable T>
 typename RedBlackTree<T>::Node *RedBlackTree<T>::getNode(const T &el) const
 {
     Node *current = root;
-
     while (current != NIL)
     {
-        int comparison = comparator->compare(el, current->value);
-
-        if (comparison == 0)
+        if (el == current->value)
             return current;
-        else if (comparison < 0)
-            current = current->left;
-        else
-            current = current->right;
+
+        current = (el < current->value)
+                      ? current->left
+                      : current->right;
     }
-    return NULL;
+    return nullptr;
 }
 
-template <typename T>
+template <Comparable T>
 typename RedBlackTree<T>::Node *RedBlackTree<T>::getNodeSuccessor(const Node *node) const
 {
     if (node == NIL)
-        return NULL;
+        return nullptr;
 
     if (node->right != NIL)
         return getMinimumNode(node->right);
@@ -224,57 +280,45 @@ typename RedBlackTree<T>::Node *RedBlackTree<T>::getNodeSuccessor(const Node *no
     return parent;
 }
 
-template <typename T>
+template <Comparable T>
 void RedBlackTree<T>::add(const T &el)
 {
-    if (comparator == NULL)
-        throw std::runtime_error("Comparator is undefined!");
+    Node *parent = NIL;
+    Node *current = root;
 
-    Node *currentParent = NIL;
-    Node *currentEl = root;
-
-    while (currentEl != NIL)
+    while (current != NIL)
     {
-        currentParent = currentEl;
-
-        int comparison = comparator->compare(el, currentEl->value);
-        if (comparison < 0)
-            currentEl = currentEl->left;
+        parent = current;
+        if (el < current->value)
+            current = current->left;
         else
-            currentEl = currentEl->right;
+            current = current->right;
     }
 
-    Node *newNode = new Node(el, false, NIL, NIL, currentParent);
+    Node *newNode = new Node(el, NodeColor::Red, NIL, NIL, parent);
 
-    if (currentParent == NIL)
-    {
-        newNode->color = true;
+    if (parent == NIL)
         root = newNode;
-    }
+    else if (newNode->value < parent->value)
+        parent->left = newNode;
     else
-    {
-        int comparison = comparator->compare(el, currentParent->value);
-        if (comparison < 0)
-            currentParent->left = newNode;
-        else
-            currentParent->right = newNode;
+        parent->right = newNode;
 
-        fixTreeAfterInsertion(newNode);
-    }
+    fixTreeAfterInsertion(newNode);
     size++;
 }
 
-template <typename T>
+template <Comparable T>
 void RedBlackTree<T>::remove(const T &el)
 {
     Node *node = getNode(el);
 
-    if (node == NULL || node == NIL)
+    if (node == nullptr || node == NIL)
         throw std::runtime_error("Didn't find desired node!");
 
     Node *nodeToFix;
     Node *originalNode = node;
-    bool originalNodeColor = node->color;
+    NodeColor originalNodeColor = node->color;
 
     if (node->left == NIL)
     {
@@ -307,15 +351,15 @@ void RedBlackTree<T>::remove(const T &el)
         successor->color = node->color;
     }
 
-    if (originalNodeColor)
+    if (originalNodeColor == NodeColor::Black)
         fixTreeAfterRemoval(nodeToFix);
 
     delete originalNode;
     size--;
 }
 
-template <typename T>
-void RedBlackTree<T>::leftRotate(Node *node)
+template <Comparable T>
+void RedBlackTree<T>::leftRotate(Node *node) noexcept
 {
     Node *rightSubtree = node->right;
     node->right = rightSubtree->left;
@@ -336,8 +380,8 @@ void RedBlackTree<T>::leftRotate(Node *node)
     node->parent = rightSubtree;
 }
 
-template <typename T>
-void RedBlackTree<T>::rightRotate(Node *node)
+template <Comparable T>
+void RedBlackTree<T>::rightRotate(Node *node) noexcept
 {
     Node *leftSubtree = node->left;
     node->left = leftSubtree->right;
@@ -358,7 +402,7 @@ void RedBlackTree<T>::rightRotate(Node *node)
     node->parent = leftSubtree;
 }
 
-template <typename T>
+template <Comparable T>
 void RedBlackTree<T>::fixTreeAfterInsertion(Node *node)
 {
     while (node != root && isRed(node->parent))
@@ -366,7 +410,7 @@ void RedBlackTree<T>::fixTreeAfterInsertion(Node *node)
         Node *parent = node->parent;
         Node *grandparent = parent->parent;
 
-        if (grandparent == NULL)
+        if (grandparent == nullptr)
             break;
 
         if (parent == grandparent->left)
@@ -376,9 +420,9 @@ void RedBlackTree<T>::fixTreeAfterInsertion(Node *node)
             if (isRed(uncle))
             {
                 // Case 1
-                parent->color = true;
-                uncle->color = true;
-                grandparent->color = false;
+                parent->color = NodeColor::Black;
+                uncle->color = NodeColor::Black;
+                grandparent->color = NodeColor::Red;
                 node = grandparent;
             }
             else
@@ -390,8 +434,8 @@ void RedBlackTree<T>::fixTreeAfterInsertion(Node *node)
                     leftRotate(node);
                 }
                 // Case 3
-                parent->color = true;
-                grandparent->color = false;
+                parent->color = NodeColor::Black;
+                grandparent->color = NodeColor::Red;
                 rightRotate(grandparent);
             }
         }
@@ -402,9 +446,9 @@ void RedBlackTree<T>::fixTreeAfterInsertion(Node *node)
             if (isRed(uncle))
             {
                 // Case 1
-                parent->color = true;
-                uncle->color = true;
-                grandparent->color = false;
+                parent->color = NodeColor::Black;
+                uncle->color = NodeColor::Black;
+                grandparent->color = NodeColor::Red;
                 node = grandparent;
             }
             else
@@ -417,16 +461,16 @@ void RedBlackTree<T>::fixTreeAfterInsertion(Node *node)
                 }
 
                 // Case 3
-                parent->color = true;
-                grandparent->color = false;
+                parent->color = NodeColor::Black;
+                grandparent->color = NodeColor::Red;
                 leftRotate(grandparent);
             }
         }
     }
-    root->color = true;
+    root->color = NodeColor::Black;
 }
 
-template <typename T>
+template <Comparable T>
 void RedBlackTree<T>::fixTreeAfterRemoval(Node *node)
 {
     while (node != root && !isRed(node))
@@ -438,8 +482,8 @@ void RedBlackTree<T>::fixTreeAfterRemoval(Node *node)
             // Case 1
             if (isRed(sibling))
             {
-                sibling->color = true;
-                node->parent->color = false;
+                sibling->color = NodeColor::Black;
+                node->parent->color = NodeColor::Red;
                 leftRotate(node->parent);
                 sibling = node->parent->right;
             }
@@ -447,7 +491,7 @@ void RedBlackTree<T>::fixTreeAfterRemoval(Node *node)
             // Case 2
             if (!isRed(sibling->left) && !isRed(sibling->right))
             {
-                sibling->color = false;
+                sibling->color = NodeColor::Red;
                 node = node->parent;
             }
             else
@@ -456,19 +500,19 @@ void RedBlackTree<T>::fixTreeAfterRemoval(Node *node)
                 if (!isRed(sibling->right))
                 {
                     if (sibling->left != NIL)
-                        sibling->left->color = true;
+                        sibling->left->color = NodeColor::Black;
 
-                    sibling->color = false;
+                    sibling->color = NodeColor::Red;
                     rightRotate(sibling);
                     sibling = node->parent->right;
                 }
 
                 // Case 4
                 sibling->color = node->parent->color;
-                node->parent->color = true;
+                node->parent->color = NodeColor::Black;
 
                 if (sibling->right != NIL)
-                    sibling->right->color = true;
+                    sibling->right->color = NodeColor::Black;
 
                 leftRotate(node->parent);
                 node = root;
@@ -481,8 +525,8 @@ void RedBlackTree<T>::fixTreeAfterRemoval(Node *node)
             // Case 1
             if (isRed(sibling))
             {
-                sibling->color = true;
-                node->parent->color = false;
+                sibling->color = NodeColor::Black;
+                node->parent->color = NodeColor::Red;
                 rightRotate(node->parent);
                 sibling = node->parent->left;
             }
@@ -490,7 +534,7 @@ void RedBlackTree<T>::fixTreeAfterRemoval(Node *node)
             // Case 2
             if (!isRed(sibling->left) && !isRed(sibling->right))
             {
-                sibling->color = false;
+                sibling->color = NodeColor::Red;
                 node = node->parent;
             }
             else
@@ -499,19 +543,19 @@ void RedBlackTree<T>::fixTreeAfterRemoval(Node *node)
                 if (!isRed(sibling->left))
                 {
                     if (sibling->right != NIL)
-                        sibling->right->color = true;
+                        sibling->right->color = NodeColor::Black;
 
-                    sibling->color = false;
+                    sibling->color = NodeColor::Red;
                     leftRotate(sibling);
                     sibling = node->parent->left;
                 }
 
                 // Case 4
                 sibling->color = node->parent->color;
-                node->parent->color = true;
+                node->parent->color = NodeColor::Black;
 
                 if (sibling->left != NIL)
-                    sibling->left->color = true;
+                    sibling->left->color = NodeColor::Black;
 
                 rightRotate(node->parent);
                 node = root;
@@ -520,23 +564,23 @@ void RedBlackTree<T>::fixTreeAfterRemoval(Node *node)
     }
 
     if (node != NIL)
-        node->color = true;
+        node->color = NodeColor::Black;
 }
 
-template <typename T>
+template <Comparable T>
 bool RedBlackTree<T>::isValid() const
 {
     if (root == NIL)
         return true;
-    if (root->color == false)
+    if (root->color == NodeColor::Red)
         return false;
 
     int blackHeight = -1;
     return validateRules(root, 0, blackHeight);
 }
 
-template <typename T>
-bool RedBlackTree<T>::validateRules(Node *node, int currentBlackCount, int &expectedBlackCount) const
+template <Comparable T>
+bool RedBlackTree<T>::validateRules(Node *node, int currentBlackCount, int &expectedBlackCount) const noexcept
 {
     if (node == NIL)
     {
@@ -560,15 +604,15 @@ bool RedBlackTree<T>::validateRules(Node *node, int currentBlackCount, int &expe
            validateRules(node->right, currentBlackCount, expectedBlackCount);
 }
 
-template <typename T>
-bool RedBlackTree<T>::isRed(Node *node) const
+template <Comparable T>
+bool RedBlackTree<T>::isRed(Node *node) const noexcept
 {
     if (node == NIL)
         return false;
-    return !node->color;
+    return (node->color == NodeColor::Red);
 }
 
-template <typename T>
+template <Comparable T>
 int RedBlackTree<T>::getSize() const
 {
     return size;

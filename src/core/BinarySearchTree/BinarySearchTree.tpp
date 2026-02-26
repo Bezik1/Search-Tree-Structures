@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 
 #include "BinarySearchTree.hpp"
 
@@ -9,27 +10,27 @@ const std::string BinarySearchTree<T>::EMPTY_TREE_MESSAGE = "Empty Tree";
 
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree(IComparator<T> *comp)
-    : comparator(comp), root(NULL), size(0) {}
+    : comparator(comp), root(nullptr), size(0) {}
 
 template <typename T>
 BinarySearchTree<T>::~BinarySearchTree()
 {
     deleteSubtree(root);
-    root = NULL;
+    root = nullptr;
     size = 0;
 };
 
 template <typename T>
-IIterator<T> *BinarySearchTree<T>::iterator() const
+std::unique_ptr<IIterator<T>> BinarySearchTree<T>::iterator() const
 {
-    return new Iterator(root);
+    return std::make_unique<Iterator>(root);
 }
 
 template <typename T>
 BinarySearchTree<T>::Iterator::Iterator(Node *root)
     : current(root)
 {
-    while (current != NULL)
+    while (current != nullptr)
     {
         stack.push(current);
         current = current->left;
@@ -51,10 +52,10 @@ T BinarySearchTree<T>::Iterator::next()
     Node *node = stack.pop();
     T result = node->value;
 
-    if (node->right != NULL)
+    if (node->right != nullptr)
     {
         Node *temp = node->right;
-        while (temp != NULL)
+        while (temp != nullptr)
         {
             stack.push(temp);
             temp = temp->left;
@@ -106,14 +107,14 @@ void BinarySearchTree<T>::deleteSubtree(Node *node)
 template <typename T>
 void BinarySearchTree<T>::transplant(Node *node, Node *child)
 {
-    if (node->parent == NULL)
+    if (node->parent == nullptr)
         root = child;
     else if (node == node->parent->left)
         node->parent->left = child;
     else
         node->parent->right = child;
 
-    if (child != NULL)
+    if (child != nullptr)
         child->parent = node->parent;
 }
 
@@ -139,11 +140,11 @@ template <typename T>
 typename BinarySearchTree<T>::Node *BinarySearchTree<T>::getMinimumNode(Node *current) const
 {
     if (!current)
-        return NULL;
+        return nullptr;
 
     Node *temp = current;
 
-    while (temp->left != NULL)
+    while (temp->left != nullptr)
         temp = temp->left;
     return temp;
 }
@@ -152,11 +153,11 @@ template <typename T>
 typename BinarySearchTree<T>::Node *BinarySearchTree<T>::getMaximumNode(Node *current) const
 {
     if (!current)
-        return NULL;
+        return nullptr;
 
     Node *temp = current;
 
-    while (temp->right != NULL)
+    while (temp->right != nullptr)
         temp = temp->right;
     return temp;
 }
@@ -166,7 +167,7 @@ typename BinarySearchTree<T>::Node *BinarySearchTree<T>::getNode(const T &el) co
 {
     Node *current = root;
 
-    while (current != NULL)
+    while (current != nullptr)
     {
         int comparison = comparator->compare(el, current->value);
 
@@ -177,21 +178,21 @@ typename BinarySearchTree<T>::Node *BinarySearchTree<T>::getNode(const T &el) co
         else
             current = current->right;
     }
-    return NULL;
+    return nullptr;
 }
 
 template <typename T>
 typename BinarySearchTree<T>::Node *BinarySearchTree<T>::getNodeSuccessor(const Node *node) const
 {
-    if (node == NULL)
-        return NULL;
+    if (node == nullptr)
+        return nullptr;
 
-    if (node->right != NULL)
+    if (node->right != nullptr)
         return getMinimumNode(node->right);
 
     Node *parent = node->parent;
 
-    while (parent != NULL && node == parent->right)
+    while (parent != nullptr && node == parent->right)
     {
         node = parent;
         parent = parent->parent;
@@ -203,13 +204,13 @@ typename BinarySearchTree<T>::Node *BinarySearchTree<T>::getNodeSuccessor(const 
 template <typename T>
 void BinarySearchTree<T>::add(const T &el)
 {
-    if (comparator == NULL)
+    if (comparator == nullptr)
         throw std::runtime_error("Comparator is undefined!");
 
-    Node *currentParent = NULL;
+    Node *currentParent = nullptr;
     Node *currentEl = root;
 
-    while (currentEl != NULL)
+    while (currentEl != nullptr)
     {
         currentParent = currentEl;
 
@@ -220,9 +221,9 @@ void BinarySearchTree<T>::add(const T &el)
             currentEl = currentEl->right;
     }
 
-    Node *newNode = new Node(el, NULL, NULL, currentParent);
+    Node *newNode = new Node(el, nullptr, nullptr, currentParent);
 
-    if (currentParent == NULL)
+    if (currentParent == nullptr)
         root = newNode;
     else
     {
@@ -239,7 +240,7 @@ template <typename T>
 void BinarySearchTree<T>::clear()
 {
     deleteSubtree(root);
-    root = NULL;
+    root = nullptr;
     size = 0;
 }
 
@@ -248,7 +249,7 @@ void BinarySearchTree<T>::remove(const T &el)
 {
     Node *node = getNode(el);
 
-    if (node == NULL)
+    if (node == nullptr)
         throw std::runtime_error("Didn't find desired node!");
 
     if (!node->left)
@@ -276,7 +277,7 @@ void BinarySearchTree<T>::remove(const T &el)
 template <typename T>
 bool BinarySearchTree<T>::contains(const T &el) const
 {
-    return getNode(el) != NULL;
+    return getNode(el) != nullptr;
 }
 
 template <typename T>

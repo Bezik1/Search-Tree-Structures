@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 
 #include "../../utils/stacks/Stack/Stack.hpp"
 
@@ -37,7 +38,8 @@
  * @todo
  * 1. Create a copy constructor;
  * 2. Create copy assignment operator;
- * 3. Implement comparator == NULL, checking where needed;
+ * 3. Implement comparator == nullptr, checking where needed;
+ * 4. Refactor this class to implement C++ 23;
  *
  * @see ITree
  * @see IComparator
@@ -54,7 +56,7 @@ class BinarySearchTree : public ITree<T>
 public:
     ~BinarySearchTree();
 
-    BinarySearchTree(IComparator<T> *comp = NULL);
+    BinarySearchTree(IComparator<T> *comp = nullptr);
 
     /**
      * @brief Returns the iterator for BinarySearchTree.
@@ -67,7 +69,7 @@ public:
      *
      * @return IIterator<T>* - iterator.
      */
-    IIterator<T> *iterator() const override;
+    std::unique_ptr<IIterator<T>> iterator() const override;
 
     /**
      * @brief Returns the miniumum element of the BST.
@@ -119,7 +121,7 @@ public:
      *
      * @details Firstly method find the correct place for new Node, with the usage
      * of {@link #comparator}. Next it creates new Node, with the given new value of
-     * type T and left and right child as NULL. It checks if the choosen place is root
+     * type T and left and right child as nullptr. It checks if the choosen place is root
      * and if it is i fact, then it replace the reference for the root, with reference
      * of the new object. However if it isn't than it sets either left or right children of
      * it's parent as the freshly created object.
@@ -229,7 +231,7 @@ private:
         Node *parent;
 
         Node(const T &value)
-            : value(value), left(NULL), right(NULL), parent(NULL) {};
+            : value(value), left(nullptr), right(nullptr), parent(nullptr) {};
 
         Node(const T &value,
              Node *left,
@@ -394,7 +396,7 @@ private:
     std::string toStringRecursive(const Node *node, int level) const;
 
     IComparator<T> *comparator;
-    Node *root = NULL;
+    Node *root = nullptr;
     int size = 0;
 };
 

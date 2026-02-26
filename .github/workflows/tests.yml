@@ -15,7 +15,7 @@ jobs:
     - name: Compile Tests
       run: |
         mkdir -p bin
-        clang++ -std=c++17 $(find src -type f -name '*.cpp' ! -name 'main.cpp') $(find tests -type f -name '*.cpp') -o bin/tests -I/usr/local/include -L/usr/local/lib -lgtest -lgtest_main -lpthread
+        clang++ -std=c++23 $(find src -type f -name '*.cpp' ! -name 'main.cpp') $(find tests -type f -name '*.cpp') -o bin/tests -I/usr/local/include -L/usr/local/lib -lgtest -lgtest_main -lpthread
 
     - name: Run Tests
       run: ./bin/tests

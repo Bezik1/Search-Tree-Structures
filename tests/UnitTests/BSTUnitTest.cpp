@@ -6,7 +6,11 @@
 /**
  * @brief Tests for BinarySearchTree class.
  *
+ * @todo
+ * 1. Refactor this test to implement C++ 23;
+ *
  * @test
+ *
  */
 class BSTUnitTest : public testing::Test
 {
@@ -39,8 +43,6 @@ TEST_F(BSTUnitTest, IteratorGeneralTest)
     ASSERT_DOUBLE_EQ(iter->next(), 5.0);
     ASSERT_DOUBLE_EQ(iter->next(), 7.0);
     ASSERT_FALSE(iter->hasNext());
-
-    delete iter;
 }
 
 TEST_F(BSTUnitTest, RemovalGeneralTest)

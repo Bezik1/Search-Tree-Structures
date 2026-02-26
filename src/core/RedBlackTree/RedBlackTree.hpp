@@ -1,13 +1,15 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 
 #include "../../utils/stacks/Stack/Stack.hpp"
+
+#include "../../concepts/Comparable.hpp"
 
 #include "../../interfaces/IStack.hpp"
 #include "../../interfaces/ITree.hpp"
 #include "../../interfaces/IIterator.hpp"
-#include "../../interfaces/IComparator.hpp"
 
 /**
  * @brief Dynamic and efficient implementation of ITree interface. It uses red and black
@@ -21,27 +23,39 @@
  * 4. Every path from a node to its descendant leafs must have the same number of black nodes;
  * 5. All leafs are black.
  *
- * @todo
- * 1. Create a copy constructor;
- * 2. Create copy assignment operator;
- *
+ * <table>
+ *   <tr><th>Operation</th><th>Average Time Complexity</th><th>Worst Time Complexity</th></tr>
+ *   <tr><td>Addition</td><td>O(log n)</td><td>O(log n)</td></tr>
+ *   <tr><td>Deletion</td><td>O(log n)</td><td>O(log n)</td></tr>
+ *   <tr><td>Search</td><td>O(log n)</td><td>O(log n)</td></tr>
+ * </table>
  *
  * @see ITree
- * @see IComparator
  * @see IIterator
  * @see Node
+ *
+ * @todo
+ * 1. Change the implementation of iterator to stl iterator type;
  *
  * @tparam T
  *
  * @author Mateusz Adamowicz
  */
-template <typename T>
+template <Comparable T>
 class RedBlackTree : public ITree<T>
 {
 public:
-    ~RedBlackTree();
+    ~RedBlackTree() noexcept;
 
-    RedBlackTree(IComparator<T> *comp = NULL);
+    RedBlackTree() noexcept;
+
+    RedBlackTree(const RedBlackTree &other);
+
+    RedBlackTree<T> &operator=(const RedBlackTree other);
+
+    RedBlackTree(RedBlackTree &&other) noexcept;
+
+    RedBlackTree<T> &operator=(RedBlackTree &&other) noexcept;
 
     /**
      * @brief Returns the iterator for RedBlackTree.
@@ -54,7 +68,7 @@ public:
      *
      * @return IIterator<T>* - iterator.
      */
-    IIterator<T> *iterator() const override;
+    [[nodiscard]] std::unique_ptr<IIterator<T>> iterator() const noexcept override;
 
     /**
      * @brief Returns the miniumum element of the RBT.
@@ -63,14 +77,12 @@ public:
      * left child is always smaller, than it's parent. One can
      * then observe that the leftmost child must be the miniumum.
      *
-     * For comparison RedBlackTree uses {@link #comparator} object that
-     * implements IComparator interface.
+     * For comparison RedBlackTree uses Comparable concept.
      *
      * The real implementation invoke private {@link #getMinimumNode} method,
      * with the root as the argument to activate it.
      *
      * @see getMinimumNode
-     * @see IComparator
      *
      * @throws std::runtime_error - Tree is empty!
      *
@@ -85,14 +97,12 @@ public:
      * right child is always greater, than it's parent. One can
      * then observe that the rightmost child must be the maximum.
      *
-     * For comparison RedBlackTree uses {@link #comparator} object that
-     * implements IComparator interface.
+     * For comparison RedBlackTree uses Comparable concept.
      *
      * The real implementation invoke private {@link #getMaximumNode} method,
      * with the root as the argument to activate it.
      *
      * @see getMaximumNode
-     * @see IComparator
      *
      * @throws std::runtime_error - Tree is empty!
      *
@@ -108,7 +118,6 @@ public:
      * architecture are not broken. To fix eventual bugs program invoke {@link #fixTreeAfterInsertion} method,
      * which repairs tree after insertion and further repairs it up to the root node.
      *
-     * @see IComparator
      * @see Node
      *
      * @throws std::runtime_error - Comparator is undefined!
@@ -147,7 +156,7 @@ public:
     /**
      * @brief Searches the RBT to find if el is in the tree.
      *
-     * @details To achievie it, RBT uses it's core principles and IComparator
+     * @details To achievie it, RBT uses it's core principles and Comparable concept
      * to compare the values of nodes in the tree to find the desired value.
      * This fact allows RBT for average search time of O(log n).
      *
@@ -162,7 +171,7 @@ public:
      * @return true.
      * @return false.
      */
-    bool contains(const T &el) const;
+    [[nodiscard]] bool contains(const T &el) const;
 
     /**
      * @brief Returns the string representation of the tree.
@@ -179,7 +188,7 @@ public:
      *
      * @return std::string - string representation of the tree.
      */
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     /**
      * @brief Checks if current structure correctly represents RBT.
@@ -192,12 +201,18 @@ public:
      * @return true
      * @return false
      */
-    bool isValid() const;
+    [[nodiscard]] bool isValid() const;
 
-    int getSize() const override;
+    [[nodiscard]] int getSize() const override;
 
 private:
     static const std::string EMPTY_TREE_MESSAGE;
+
+    enum class NodeColor
+    {
+        Red,
+        Black
+    };
 
     /**
      * @brief It's the basic building block of RedBlackTree.
@@ -218,21 +233,13 @@ private:
     struct Node
     {
         T value;
-        bool color;
+        NodeColor color;
         Node *left;
         Node *right;
         Node *parent;
 
-        Node(const T &value,
-             bool color,
-             Node *left,
-             Node *right,
-             Node *parent)
-            : value(value),
-              color(color),
-              left(left),
-              right(right),
-              parent(parent) {}
+        Node(const T &value, NodeColor color, Node *left, Node *right, Node *parent)
+            : value(value), color(color), left(left), right(right), parent(parent) {}
     };
 
     /**
@@ -299,6 +306,18 @@ private:
     };
 
     /**
+     * @brief Deep copy the given subtree.
+     *
+     * @details This is implemented recursively.
+     *
+     * @param node - subtree to copy.
+     * @param parent - parent reference to this subtree.
+     *
+     * @return Node* - deeply copied subtree.
+     */
+    Node *copySubtree(Node *node, Node *parent);
+
+    /**
      * @brief Delete and free the memory from the node and it's children.
      *
      * @details It is done by recursively calling and resolving the memory
@@ -319,7 +338,7 @@ private:
      * @param node - desired node.
      * @param child  - it's child.
      */
-    void transplant(Node *node, Node *child);
+    void transplant(Node *node, Node *child) noexcept;
 
     /**
      * @brief Finds the Node Successor object (e.g the smallest node that is bigger than the choosen one.
@@ -345,11 +364,9 @@ private:
      * right child is always greater, than it's parent. One can
      * then observe that the rightmost child must be the maximum.
      *
-     * For comparison RedBlackTree uses {@link #comparator} object that
-     * implements IComparator interface.
+     * For comparison RedBlackTree uses Comparable concept.
      *
      * @see getMaximumNode
-     * @see IComparator
      *
      * @return T - maximum element.
      */
@@ -362,12 +379,10 @@ private:
      * left child is always smaller, than it's parent. One can
      * then observe that the leftmost child must be the minimum.
      *
-     * For comparison RedBlackTree uses {@link #comparator} object that
-     * implements IComparator interface.
+     * For comparison RedBlackTree uses Comparable concept.
      *
      *
      * @see getMinimumNode
-     * @see IComparator
      *
      * @return T - minimum element.
      */
@@ -376,7 +391,7 @@ private:
     /**
      * @brief Searches the RBT to find if node is in the tree.
      *
-     * @details To achievie it, RBT uses it's core principles and IComparator
+     * @details To achievie it, RBT uses it's core principles and Comparable concept
      * to compare the values of nodes in the tree to find the desired value.
      * This fact allows RBT for average search time of O(log n).
      *
@@ -408,7 +423,7 @@ private:
      * @param node - current pivot node of rotation.
      *
      */
-    void leftRotate(Node *node);
+    void leftRotate(Node *node) noexcept;
 
     /**
      * @brief Rotates the desired subtree to the right.
@@ -432,7 +447,7 @@ private:
      * @param node - current pivot node of rotation.
      *
      */
-    void rightRotate(Node *node);
+    void rightRotate(Node *node) noexcept;
 
     /**
      * @brief Insertion of element can break the rules of RBT, so this function repairs it.
@@ -484,7 +499,7 @@ private:
      * @return true
      * @return false
      */
-    bool isRed(Node *node) const;
+    bool isRed(Node *node) const noexcept;
 
     /**
      * @brief Prints the current node of the tree and recursevily call this function on the level below.
@@ -506,10 +521,9 @@ private:
      * @return true
      * @return false
      */
-    bool validateRules(Node *node, int currentBlackCount, int &expectedBlackCount) const;
+    bool validateRules(Node *node, int currentBlackCount, int &expectedBlackCount) const noexcept;
 
-    IComparator<T> *comparator;
-    Node *root = NULL;
+    Node *root = nullptr;
     int size = 0;
 };
 

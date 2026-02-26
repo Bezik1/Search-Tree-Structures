@@ -1,6 +1,8 @@
 #pragma once
 
-#include "iostream"
+#include <memory>
+#include <iostream>
+
 #include "IIterator.hpp"
 
 /**
@@ -14,7 +16,7 @@
  * to the logarithmic one.
  *
  * Nodes are splitted into three categories:
- * 1. root - the first node of the tree, with parent as a NULL reference;
+ * 1. root - the first node of the tree, with parent as a nullptr reference;
  * 2. internal nodes - nodes that have parent, left, right or left and right references;
  * 3. leaf nodes - nodes with nullified left and right references;
  *
@@ -41,7 +43,7 @@ public:
      *
      * @return IIterator<T>* iterator.
      */
-    virtual IIterator<T> *iterator() const = 0;
+    virtual std::unique_ptr<IIterator<T>> iterator() const = 0;
 
     /**
      * @brief Adds new element to the tree.
