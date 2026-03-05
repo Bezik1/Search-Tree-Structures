@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(RBT)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(APPLE)
     list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew")

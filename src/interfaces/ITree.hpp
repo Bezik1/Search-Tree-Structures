@@ -41,7 +41,7 @@ public:
      *
      * @note Required method.
      *
-     * @return IIterator<T>* iterator.
+     * @return std::unique_ptr<IIterator<T>> smart pointer to iterator.
      */
     virtual std::unique_ptr<IIterator<T>> iterator() const = 0;
 

@@ -66,7 +66,7 @@ public:
      *
      * @see IIterator
      *
-     * @return IIterator<T>* - iterator.
+     * @return std::unique_ptr<IIterator<T>> - smart pointer to iterator.
      */
     [[nodiscard]] std::unique_ptr<IIterator<T>> iterator() const noexcept override;
 

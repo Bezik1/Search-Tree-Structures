@@ -1,20 +1,10 @@
 {
     "configurations": [
         {
-            "name": "Mac-GTest",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "/opt/homebrew/include",
-                "${workspaceFolder}/src",
-                "${workspaceFolder}/src/core",
-                "${workspaceFolder}/src/interfaces"
-            ],
-            "defines": [],
-            "macFrameworkPath": [
-                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
-            ],
+            "name": "Mac",
+            "configurationProvider": "ms-vscode.cmake-tools", 
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
             "compilerPath": "/usr/bin/clang++",
-            "cStandard": "c17",
             "cppStandard": "c++23",
             "intelliSenseMode": "macos-clang-arm64"
         }

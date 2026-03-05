@@ -1,8 +1,8 @@
 # Project
 /data
 
-/html
-/latex
+/docs/html
+/docs/latex
 
 /bin
 /build
