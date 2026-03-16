@@ -14,16 +14,11 @@
 class RBTUnitTest : public testing::Test
 {
 protected:
-    RedBlackTree<double> *rbt;
+    std::unique_ptr<RedBlackTree<double>> rbt;
 
     void SetUp() override
     {
-        rbt = new RedBlackTree<double>();
-    }
-
-    void TearDown() override
-    {
-        delete rbt;
+        rbt = std::make_unique<RedBlackTree<double>>();
     }
 };
 
@@ -37,7 +32,7 @@ TEST_F(RBTUnitTest, IteratorGeneralTest)
     rbt->add(7.0);
 
     auto iter = rbt->iterator();
-    ASSERT_TRUE(iter != NULL);
+    ASSERT_TRUE(iter != nullptr);
 
     ASSERT_TRUE(iter->hasNext());
     ASSERT_DOUBLE_EQ(iter->next(), 3.0);
