@@ -16,16 +16,11 @@ class BSTUnitTest : public testing::Test
 {
 protected:
     DoubleComparator comparator;
-    BinarySearchTree<double> *bst;
+    std::unique_ptr<BinarySearchTree<double>> bst;
 
     void SetUp() override
     {
-        bst = new BinarySearchTree<double>(&comparator);
-    }
-
-    void TearDown() override
-    {
-        delete bst;
+        bst = std::make_unique<BinarySearchTree<double>>(&comparator);
     }
 };
 
