@@ -1,4 +1,4 @@
-# 🌳 Mini Project
+# 🌳 Search Tree Structure
 
 ## 💡 Overview
 
