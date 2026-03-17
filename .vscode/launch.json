@@ -2,23 +2,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run Main",
+            "name": "Run Project Main",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/main",
             "cwd": "${workspaceFolder}",
             "MIMode": "lldb",
-            "preLaunchTask": "Build App",
+            "preLaunchTask": "Build Project",
             "visualizerFile": "/Users/mateuszadamowicz/Library/Application Support/Code/User/workspaceStorage/39f5990b86fcd335d48f145a08be8b3a/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
-            "name": "Run Tests",
+            "name": "Run Project Tests",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/tests",
             "cwd": "${workspaceFolder}",
             "MIMode": "lldb",
-            "preLaunchTask": "Build Tests",
+            "preLaunchTask": "Build Project Tests",
             "externalConsole": false,
             "visualizerFile": "/Users/mateuszadamowicz/Library/Application Support/Code/User/workspaceStorage/39f5990b86fcd335d48f145a08be8b3a/tonka3000.qtvsctools/qt.natvis.xml"
         }
