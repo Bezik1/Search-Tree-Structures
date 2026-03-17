@@ -2,13 +2,13 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build App",
+            "label": "Build Project",
             "type": "shell",
             "command": "cmake --build build --target main",
             "group": "build"
         },
         {
-            "label": "Build Tests",
+            "label": "Build Project Tests",
             "type": "shell",
             "command": "cmake --build build --target tests",
             "group": "build"

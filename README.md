@@ -1,4 +1,4 @@
-# 🌳 Search Tree Structure
+# 🌳 Search-Tree-Structures
 
 ## 💡 Overview
 
