@@ -6,9 +6,6 @@
 /**
  * @brief Tests for BinarySearchTree class.
  *
- * @todo
- * 1. Refactor this test to implement C++ 23;
- *
  * @test
  *
  */

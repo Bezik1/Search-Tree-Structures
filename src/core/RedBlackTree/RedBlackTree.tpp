@@ -9,12 +9,11 @@ const std::string RedBlackTree<T>::EMPTY_TREE_MESSAGE = "Empty Tree";
 
 template <Comparable T>
 RedBlackTree<T>::RedBlackTree() noexcept
+    : NIL(new Node(T(), NodeColor::Black, nullptr, nullptr, nullptr)),
+      root(NIL),
+      size(0)
 {
-    NIL = new Node(T(), NodeColor::Black, nullptr, nullptr, nullptr);
     NIL->left = NIL->right = NIL->parent = NIL;
-
-    root = NIL;
-    size = 0;
 }
 
 template <Comparable T>
@@ -29,10 +28,12 @@ RedBlackTree<T>::~RedBlackTree() noexcept
 
 template <Comparable T>
 RedBlackTree<T>::RedBlackTree(const RedBlackTree &other)
+    : NIL(new Node(T(), NodeColor::Black, nullptr, nullptr, nullptr)),
+      root(nullptr),
+      size(other.size)
 {
-    NIL = new Node(T(), NodeColor::Black, nullptr, nullptr, nullptr);
+    NIL->left = NIL->right = NIL->parent = NIL;
     root = copySubtree(other.root, nullptr);
-    size = other.size;
 }
 
 template <Comparable T>

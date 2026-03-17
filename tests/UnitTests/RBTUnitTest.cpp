@@ -5,10 +5,6 @@
 /**
  * @brief Tests for RedBlackTree class.
  *
- * @todo
- * 1. Create tests for checking the internal structure of the tree;
- * 2. Refactor this test to implement C++ 23;
- *
  * @test
  */
 class RBTUnitTest : public testing::Test
