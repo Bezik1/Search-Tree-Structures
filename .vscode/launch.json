@@ -9,7 +9,7 @@
             "cwd": "${workspaceFolder}",
             "MIMode": "lldb",
             "preLaunchTask": "Build Project",
-            "visualizerFile": "/Users/mateuszadamowicz/Library/Application Support/Code/User/workspaceStorage/39f5990b86fcd335d48f145a08be8b3a/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/Users/mateuszadamowicz/Library/Application Support/Code/User/workspaceStorage/838ef04dbd7312a4e085a4551843a85b/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "Run Project Tests",
@@ -20,7 +20,7 @@
             "MIMode": "lldb",
             "preLaunchTask": "Build Project Tests",
             "externalConsole": false,
-            "visualizerFile": "/Users/mateuszadamowicz/Library/Application Support/Code/User/workspaceStorage/39f5990b86fcd335d48f145a08be8b3a/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/Users/mateuszadamowicz/Library/Application Support/Code/User/workspaceStorage/838ef04dbd7312a4e085a4551843a85b/tonka3000.qtvsctools/qt.natvis.xml"
         }
     ]
 }

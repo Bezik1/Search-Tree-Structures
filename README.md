@@ -53,6 +53,10 @@ The repository supports custom Git hooks for development automation.
 ```bash
 # Enables git hooks
 chmod u+x .git/hooks/*
+
+# Setup local tests
+chmod +x .githooks/pre-commit
+git config core.hooksPath .githooks
 ```
 
 ## 🛠 Technologies
